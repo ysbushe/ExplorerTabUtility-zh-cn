@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 using H.Hooks;
 
 namespace ExplorerTabUtility.Models;
 
 public class HotKeyProfile
 {
+    [JsonInclude]
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string? Name { get; set; }
     public Key[]? HotKeys { get; set; }
@@ -20,6 +22,7 @@ public class HotKeyProfile
     public int Delay { get; set; }
 
     public HotKeyProfile() { }
+    internal HotKeyProfile(Guid id) => Id = id;
     public HotKeyProfile(string name, Key[] hotKeys, HotKeyAction action, string? path = null, HotkeyScope scope = HotkeyScope.Global, int delay = 0)
     {
         Name = name;

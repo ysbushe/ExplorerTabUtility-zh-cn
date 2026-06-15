@@ -95,8 +95,21 @@ public class ProfileManager
     }
 
     public IReadOnlyList<HotKeyProfile> GetProfiles() => _savedProfiles.AsReadOnly();
+    public HotKeyProfile? GetProfile(Guid id) => _savedProfiles.FirstOrDefault(p => p.Id == id);
     public IEnumerable<HotKeyProfile> GetKeyboardProfiles() => _savedProfiles.Where(p => !p.IsMouse);
     public IEnumerable<HotKeyProfile> GetMouseProfiles() => _savedProfiles.Where(p => p.IsMouse);
+
+    public void AddOrUpdateProfile(HotKeyProfile profile)
+    {
+        var index = _tempProfiles.FindIndex(p => p.Id == profile.Id);
+        if (index >= 0)
+            _tempProfiles[index] = profile.Clone();
+        else
+            _tempProfiles.Add(profile.Clone());
+
+        SaveProfiles();
+        RefreshPanel();
+    }
 
     public void SaveProfiles()
     {

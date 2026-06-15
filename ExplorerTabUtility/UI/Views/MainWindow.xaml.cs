@@ -16,6 +16,9 @@ namespace ExplorerTabUtility.UI.Views;
 // ReSharper disable once RedundantExtendsListEntry
 public partial class MainWindow : Window
 {
+    private static readonly Guid BuiltInDoubleClickEmptySpaceProfileId =
+        new("bdde839b-4ec5-4f91-bd6d-7f75593f8f5a");
+
     private readonly HookManager _hookManager;
     private readonly ProfileManager _profileManager;
     private readonly SystemTrayIcon _notifyIconManager;
@@ -30,6 +33,9 @@ public partial class MainWindow : Window
         Height = SettingsManager.FormSize.Height;
 
         _profileManager = new ProfileManager(ProfilesPanel);
+        CbDoubleClickEmptySpace.IsChecked = SettingsManager.DoubleClickEmptySpace;
+        EnsureDoubleClickEmptySpaceProfile(SettingsManager.DoubleClickEmptySpace);
+
         _hookManager = new HookManager(_profileManager);
         _notifyIconManager = new SystemTrayIcon(_profileManager, _hookManager, ShowWindow);
 
@@ -78,6 +84,8 @@ public partial class MainWindow : Window
         CbHideTrayIcon.Checked += CbHideTrayIcon_CheckedChanged;
         CbHideTrayIcon.Unchecked += CbHideTrayIcon_CheckedChanged;
         CbLanguage.SelectionChanged += CbLanguage_SelectionChanged;
+        CbDoubleClickEmptySpace.Checked += CbDoubleClickEmptySpace_CheckedChanged;
+        CbDoubleClickEmptySpace.Unchecked += CbDoubleClickEmptySpace_CheckedChanged;
 
         // Window events
         SizeChanged += MainWindow_SizeChanged;
@@ -115,6 +123,42 @@ public partial class MainWindow : Window
 
         SettingsManager.Language = newLang;
         CustomMessageBox.Show(Res.TipLanguageRestart, Res.AppTitle);
+    }
+
+    private void CbDoubleClickEmptySpace_CheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        var enabled = CbDoubleClickEmptySpace.IsChecked == true;
+        SettingsManager.DoubleClickEmptySpace = enabled;
+        EnsureDoubleClickEmptySpaceProfile(enabled);
+
+        if (enabled)
+            _hookManager.StartMouseHook();
+
+        _notifyIconManager.UpdateMenuItems();
+    }
+
+    private void EnsureDoubleClickEmptySpaceProfile(bool enabled)
+    {
+        var existing = _profileManager.GetProfile(BuiltInDoubleClickEmptySpaceProfileId);
+        if (!enabled && existing == null)
+            return;
+
+        var profile = new HotKeyProfile(BuiltInDoubleClickEmptySpaceProfileId)
+        {
+            Name = Res.BuiltInDoubleClickProfileName,
+            HotKeys = [H.Hooks.Key.MouseLeft],
+            Scope = HotkeyScope.FileExplorer,
+            Action = HotKeyAction.NavigateUp,
+            IsMouse = true,
+            IsDoubleClick = true,
+            IsEnabled = enabled,
+            IsHandled = false
+        };
+
+        _profileManager.AddOrUpdateProfile(profile);
+
+        if (enabled)
+            SettingsManager.IsMouseHookActive = true;
     }
 
     private void StartHooks()

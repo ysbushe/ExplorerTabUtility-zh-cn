@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using System.Drawing;
 using H.Hooks;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Helpers;
+using ExplorerTabUtility.WinAPI;
 
 namespace ExplorerTabUtility.Hooks;
 
@@ -12,6 +14,8 @@ public sealed class Mouse : IHook
 {
     private int _lastClickTime;
     private Key _lastClickKey;
+    private Point _lastClickPosition;
+    private bool _lastClickWasExplorerEmptySpace;
     private readonly LowLevelMouseHook _lowLevelMouseHook;
     private readonly IReadOnlyCollection<HotKeyProfile> _hotkeyProfiles;
     public bool IsHookActive => _lowLevelMouseHook.IsStarted;
@@ -32,7 +36,24 @@ public sealed class Mouse : IHook
         var handler = OnHotKeyProfileTriggered;
         if (handler == null) return;
 
-        var isDoubleClick = IsDoubleClick(e.CurrentKey);
+        var tracksEmptySpaceDoubleClick = _hotkeyProfiles.Any(profile =>
+            profile is
+            {
+                IsMouse: true,
+                IsEnabled: true,
+                IsDoubleClick: true,
+                Action: HotKeyAction.NavigateUp,
+                Scope: HotkeyScope.FileExplorer
+            } &&
+            profile.HotKeys is { Length: > 0 } hotKeys &&
+            e.Keys.Are(hotKeys));
+
+        var currentClickIsExplorerEmptySpace =
+            tracksEmptySpaceDoubleClick &&
+            Helper.IsFileExplorerForeground(out _) &&
+            Helper.IsExplorerEmptySpace(e.Position);
+
+        var click = RegisterClick(e.CurrentKey, e.Position, currentClickIsExplorerEmptySpace);
 
         bool? isFileExplorerForeground = null;
         nint handle = 0;
@@ -43,7 +64,13 @@ public sealed class Mouse : IHook
                 continue;
             
             // Skip if it requires double-click and it is not
-            if (profile.IsDoubleClick && !isDoubleClick) continue;
+            if (profile.IsDoubleClick && !click.IsDoubleClick) continue;
+
+            // NavigateUp from the mouse is intentionally conservative: both clicks
+            // must land on the Explorer file list's empty space.
+            if (profile is { IsDoubleClick: true, Action: HotKeyAction.NavigateUp } &&
+                !click.IsExplorerEmptySpaceDoubleClick)
+                continue;
             
             // Skip if keys do not match
             if (!e.Keys.Are(profile.HotKeys)) continue;
@@ -75,17 +102,40 @@ public sealed class Mouse : IHook
         }
     }
 
-    private bool IsDoubleClick(Key currentKey)
+    private ClickState RegisterClick(Key currentKey, Point position, bool isExplorerEmptySpace)
     {
-        var isDoubleClick = false;
-        
         var now = Environment.TickCount;
-        if (now - _lastClickTime < 500 && _lastClickKey == currentKey)
-            isDoubleClick = true;
-        
-        _lastClickTime = now;
-        _lastClickKey = currentKey;
-        return isDoubleClick;
+        var elapsed = unchecked((uint)(now - _lastClickTime));
+        var maxX = Math.Max(1, WinApi.GetSystemMetrics(WinApi.SM_CXDOUBLECLK) / 2);
+        var maxY = Math.Max(1, WinApi.GetSystemMetrics(WinApi.SM_CYDOUBLECLK) / 2);
+
+        var isDoubleClick =
+            _lastClickKey == currentKey &&
+            elapsed <= WinApi.GetDoubleClickTime() &&
+            Math.Abs(position.X - _lastClickPosition.X) <= maxX &&
+            Math.Abs(position.Y - _lastClickPosition.Y) <= maxY;
+
+        var isExplorerEmptySpaceDoubleClick =
+            isDoubleClick &&
+            _lastClickWasExplorerEmptySpace &&
+            isExplorerEmptySpace;
+
+        if (isDoubleClick)
+        {
+            _lastClickTime = 0;
+            _lastClickKey = default;
+            _lastClickPosition = default;
+            _lastClickWasExplorerEmptySpace = false;
+        }
+        else
+        {
+            _lastClickTime = now;
+            _lastClickKey = currentKey;
+            _lastClickPosition = position;
+            _lastClickWasExplorerEmptySpace = isExplorerEmptySpace;
+        }
+
+        return new ClickState(isDoubleClick, isExplorerEmptySpaceDoubleClick);
     }
 
     public void Dispose()
@@ -100,5 +150,11 @@ public sealed class Mouse : IHook
         public readonly HotKeyProfile Profile = profile;
         public readonly nint Handle = handle;
         public readonly Point Position = position;
+    }
+
+    private readonly struct ClickState(bool isDoubleClick, bool isExplorerEmptySpaceDoubleClick)
+    {
+        public bool IsDoubleClick { get; } = isDoubleClick;
+        public bool IsExplorerEmptySpaceDoubleClick { get; } = isExplorerEmptySpaceDoubleClick;
     }
 }

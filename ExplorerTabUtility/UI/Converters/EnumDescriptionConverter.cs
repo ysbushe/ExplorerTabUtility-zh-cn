@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Controls;
 using System.Globalization;
 using System.ComponentModel;
 using System.Resources;
@@ -17,6 +18,8 @@ public class EnumDescriptionConverter : IValueConverter
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value == null) return string.Empty;
+        if (value is ContentControl { Content: { } content })
+            value = content;
 
         var valueStr = value.ToString()!;
         var enumType = value.GetType();

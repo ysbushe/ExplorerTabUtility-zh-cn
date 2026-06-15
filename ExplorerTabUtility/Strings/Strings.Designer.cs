@@ -165,6 +165,12 @@ namespace ExplorerTabUtility.Strings {
         public static string TipLanguage => ResourceManager.GetString("TipLanguage", resourceCulture);
         public static string TipLanguageRestart => ResourceManager.GetString("TipLanguageRestart", resourceCulture);
 
+        // Built-in Double-Click Empty Space
+        public static string GrpMouseFeatures => ResourceManager.GetString("GrpMouseFeatures", resourceCulture);
+        public static string CbDoubleClickEmptySpace => ResourceManager.GetString("CbDoubleClickEmptySpace", resourceCulture);
+        public static string TipDoubleClickEmptySpace => ResourceManager.GetString("TipDoubleClickEmptySpace", resourceCulture);
+        public static string BuiltInDoubleClickProfileName => ResourceManager.GetString("BuiltInDoubleClickProfileName", resourceCulture);
+
         // HotKeyAction Descriptions
         public static string Action_Open => ResourceManager.GetString("Action_Open", resourceCulture);
         public static string Action_Duplicate => ResourceManager.GetString("Action_Duplicate", resourceCulture);

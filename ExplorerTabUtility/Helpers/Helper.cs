@@ -266,10 +266,18 @@ public static class Helper
     public static bool IsExplorerEmptySpace(Point point)
     {
         var hr = WinApi.AccessibleObjectFromPoint(point, out var accObj, out var childId);
-        if (hr != 0 || childId is not 0) return false;
+        try
+        {
+            if (hr != 0 || childId is not 0) return false;
 
-        var role = accObj.get_accRole(0);
-        return role is 0x21; //IAccessible.Role:list (ROLE_SYSTEM_LIST 0x21)
+            var role = accObj.get_accRole(0);
+            return role is 0x21; //IAccessible.Role:list (ROLE_SYSTEM_LIST 0x21)
+        }
+        finally
+        {
+            if (accObj != null && Marshal.IsComObject(accObj))
+                Marshal.ReleaseComObject(accObj);
+        }
     }
     public static bool IsFileExplorerTab(nint tab)
     {
