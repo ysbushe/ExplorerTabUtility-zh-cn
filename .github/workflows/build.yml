@@ -31,7 +31,7 @@ jobs:
 
       - name: Restore NuGet packages
         run: |
-          dotnet restore "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" -f net9.0-windows
+          dotnet restore "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" /p:TargetFramework=net9.0-windows
         shell: pwsh
 
       - name: Build net9.0-windows
