@@ -1,0 +1,226 @@
+name: Sync upstream and release zh-CN
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+    inputs:
+      force_release:
+        description: "Force a new localization release for the current upstream version"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sync-upstream-and-release
+  cancel-in-progress: false
+
+env:
+  PROJECT_NAME: ExplorerTabUtility
+  BRANCH_NAME: feature/zh-cn-localization
+  UPSTREAM_REPOSITORY: w4po/ExplorerTabUtility
+
+jobs:
+  sync-build-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout localization branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+          fetch-depth: 0
+
+      - name: Configure build tools
+        uses: microsoft/setup-msbuild@v2
+        with:
+          vs-version: "17.0"
+
+      - name: Configure .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Check upstream and merge
+        id: sync
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_RELEASE: ${{ inputs.force_release }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          $upstreamRelease = Invoke-RestMethod `
+            -Headers @{ "User-Agent" = "ExplorerTabUtility-zh-CN-Updater" } `
+            -Uri "https://api.github.com/repos/${{ env.UPSTREAM_REPOSITORY }}/releases/latest"
+
+          $upstreamTag = $upstreamRelease.tag_name
+          $recordedTag = (Get-Content ".github/upstream-version.txt" -Raw).Trim()
+          $forceRelease = $env:FORCE_RELEASE -eq "true"
+          $baseVersion = $upstreamTag.TrimStart("v").Split("-")[0]
+          $escapedBaseVersion = [regex]::Escape($baseVersion)
+          $releaseTags = gh release list `
+            --repo "${{ github.repository }}" `
+            --limit 100 `
+            --json tagName `
+            --jq ".[].tagName"
+          $hasLocalizedRelease = @($releaseTags | Where-Object {
+            $_ -match "^v$escapedBaseVersion\.\d+$"
+          }).Count -gt 0
+
+          if ($upstreamTag -eq $recordedTag -and $hasLocalizedRelease -and -not $forceRelease) {
+            "changed=false" >> $env:GITHUB_OUTPUT
+            Write-Host "Already synchronized with $upstreamTag."
+            exit 0
+          }
+
+          if ($upstreamTag -ne $recordedTag) {
+            if (-not (git remote | Select-String -SimpleMatch "upstream")) {
+              git remote add upstream "https://github.com/${{ env.UPSTREAM_REPOSITORY }}.git"
+            }
+
+            git fetch upstream master --tags
+            git merge "refs/tags/$upstreamTag" --no-edit -X ours
+            Set-Content ".github/upstream-version.txt" $upstreamTag -NoNewline
+          }
+
+          $revision = 1
+          foreach ($tag in $releaseTags) {
+            if ($tag -match "^v$escapedBaseVersion\.(\d+)$") {
+              $revision = [Math]::Max($revision, [int]$Matches[1] + 1)
+            }
+          }
+
+          $localizedVersion = "$baseVersion.$revision"
+          $projectPath = "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj"
+          [xml]$project = Get-Content $projectPath -Raw
+          $project.Project.PropertyGroup.Version = $localizedVersion
+          $project.Save((Resolve-Path $projectPath))
+
+          git add ".github/upstream-version.txt" $projectPath
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore: sync upstream $upstreamTag and prepare v$localizedVersion"
+          }
+          git push origin "HEAD:${{ env.BRANCH_NAME }}"
+
+          "changed=true" >> $env:GITHUB_OUTPUT
+          "upstream_tag=$upstreamTag" >> $env:GITHUB_OUTPUT
+          "version=$localizedVersion" >> $env:GITHUB_OUTPUT
+          "release_tag=v$localizedVersion" >> $env:GITHUB_OUTPUT
+
+      - name: Restore packages
+        if: steps.sync.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          dotnet restore "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" `
+            /p:TargetFramework=net9.0-windows
+
+      - name: Publish x64 portable build
+        if: steps.sync.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          $publishDir = "${{ github.workspace }}/publish/${{ env.PROJECT_NAME }}"
+          msbuild "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" `
+            /restore `
+            /t:Publish `
+            /p:Configuration=Release `
+            /p:TargetFramework=net9.0-windows `
+            /p:RuntimeIdentifier=win-x64 `
+            /p:PublishDir="$publishDir/" `
+            /p:DebugType=none
+
+      - name: Verify localization payload
+        if: steps.sync.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          $publishDir = "${{ github.workspace }}/publish/${{ env.PROJECT_NAME }}"
+          $requiredFiles = @(
+            "$publishDir/ExplorerTabUtility.exe",
+            "$publishDir/ExplorerTabUtility.dll",
+            "$publishDir/zh-CN/ExplorerTabUtility.resources.dll"
+          )
+
+          foreach ($file in $requiredFiles) {
+            if (-not (Test-Path $file)) {
+              throw "Required localization build file is missing: $file"
+            }
+          }
+
+      - name: Package portable release
+        id: package
+        if: steps.sync.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          $version = "${{ steps.sync.outputs.version }}"
+          $zipName = "ExplorerTabUtility_v${version}_x64_Net9.0_FrameworkDependent.zip"
+          Compress-Archive `
+            -Path "${{ github.workspace }}/publish/${{ env.PROJECT_NAME }}" `
+            -DestinationPath "${{ github.workspace }}/$zipName" `
+            -Force
+          "zip_name=$zipName" >> $env:GITHUB_OUTPUT
+
+      - name: Publish localization release
+        if: steps.sync.outputs.changed == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $releaseTag = "${{ steps.sync.outputs.release_tag }}"
+          $upstreamTag = "${{ steps.sync.outputs.upstream_tag }}"
+          $zipName = "${{ steps.package.outputs.zip_name }}"
+
+          $notes = @"
+          ## ExplorerTabUtility 简体中文自动构建
+
+          - 上游版本：$upstreamTag
+          - 汉化版本：$releaseTag
+          - 架构：Windows x64
+          - 运行环境：.NET 9 Desktop Runtime
+          - 类型：免安装绿色包
+
+          此版本由自动同步流程构建。程序内的自动更新只会下载本汉化仓库发布的版本。
+          "@
+
+          gh release create $releaseTag `
+            "${{ github.workspace }}/$zipName" `
+            --repo "${{ github.repository }}" `
+            --target "${{ env.BRANCH_NAME }}" `
+            --title "ExplorerTabUtility $releaseTag 简体中文版" `
+            --notes $notes `
+            --latest
+
+      - name: Report automatic sync failure
+        if: failure()
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $title = "自动同步或汉化版构建失败 - $(Get-Date -Format yyyy-MM-dd)"
+          $body = @"
+          自动同步上游、构建或发布汉化版时失败。
+
+          请检查工作流日志：
+          ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          自动流程没有发布失败的程序包，现有 Release 不受影响。
+          "@
+
+          $existing = gh issue list `
+            --repo "${{ github.repository }}" `
+            --state open `
+            --search "$title in:title" `
+            --json number `
+            --jq ".[0].number"
+
+          if (-not $existing) {
+            gh issue create `
+              --repo "${{ github.repository }}" `
+              --title $title `
+              --body $body
+          }
