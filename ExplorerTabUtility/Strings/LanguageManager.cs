@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Threading;
-using System.Windows;
 
 namespace ExplorerTabUtility.Strings;
 
@@ -13,9 +12,6 @@ public static class LanguageManager
         var culture = ResolveCulture(languageSetting);
         Thread.CurrentThread.CurrentUICulture = culture;
         Thread.CurrentThread.CurrentCulture = culture;
-
-        if (Application.Current != null)
-            Application.Current.Language = System.Windows.Markup.XmlLanguage.GetLanguage(culture.IetfLanguageTag);
     }
 
     private static CultureInfo ResolveCulture(string languageSetting)
