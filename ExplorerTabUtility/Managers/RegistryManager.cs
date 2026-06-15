@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Win32;
 using ExplorerTabUtility.Helpers;
 
@@ -17,6 +18,16 @@ public static class RegistryManager
         if (IsStartupEnabled)
             RemoveFromStartup();
         else
+            AddToStartup();
+    }
+
+    public static void EnsurePortableStartup()
+    {
+        var portableAutoStartPath = Path.Combine(
+            AppContext.BaseDirectory,
+            Constants.PortableAutoStartFileName);
+
+        if (File.Exists(portableAutoStartPath) && !IsInStartup())
             AddToStartup();
     }
 

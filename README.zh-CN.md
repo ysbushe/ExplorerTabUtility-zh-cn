@@ -1,5 +1,11 @@
 # Explorer Tab Utility（资源管理器标签页工具）
 
+> [!NOTE]
+> 本仓库是基于
+> [w4po/ExplorerTabUtility](https://github.com/w4po/ExplorerTabUtility)
+> 的非官方简体中文维护版，与原作者不存在隶属或官方授权关系。原项目及本维护版
+> 均按 MIT 许可证发布，署名与修改说明见 [NOTICE.md](NOTICE.md)。
+
 > [!TIP]
 > 强制将 Windows 11 中新打开的文件资源管理器窗口转换为标签页，让您的工作流更整洁、更有序！
 
@@ -99,7 +105,9 @@
 
 ## 快速开始
 
-1. 从 [Releases](https://github.com/w4po/ExplorerTabUtility/releases) 页面下载最新版本，或通过 `winget` 或 `choco` 安装：
+1. 中文绿色版请从
+   [本仓库 Releases](https://github.com/ysbushe/ExplorerTabUtility-zh-cn/releases)
+   下载。`winget` 和 `choco` 安装的是原作者发布的英文版：
     ```powershell
     winget install w4po.ExplorerTabUtility --interactive
     ```
@@ -177,6 +185,7 @@
 ## 许可证
 
 本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+原项目作者、上游地址和本维护版修改者信息见 [NOTICE.md](NOTICE.md)。
 
 ## 致谢
 

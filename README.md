@@ -1,5 +1,12 @@
 # Explorer Tab Utility
 
+> [!NOTE]
+> This repository is an unofficial Simplified Chinese localization and
+> maintenance build of
+> [w4po/ExplorerTabUtility](https://github.com/w4po/ExplorerTabUtility).
+> It is not endorsed by or affiliated with the original author. See
+> [NOTICE.md](NOTICE.md) for attribution and modification details.
+
 > [!TIP]
 > Force new File Explorer windows to open as tabs in Windows 11, making your workflow cleaner and more organized!
 

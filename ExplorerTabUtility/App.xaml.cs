@@ -23,6 +23,7 @@ public partial class App : Application
         {
             base.OnStartup(e);
             SetupTooltipBehavior();
+            RegistryManager.EnsurePortableStartup();
 
             _ = new MainWindow();
             return;

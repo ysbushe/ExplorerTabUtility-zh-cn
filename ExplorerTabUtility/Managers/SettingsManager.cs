@@ -14,15 +14,23 @@ public static class SettingsManager
     private static readonly AppSettings Settings;
     public static event EventHandler<PropertyChangedEventArgs>? StaticPropertyChanged;
 
-    private static readonly string SettingsFilePath = Path.Combine(
+    private static readonly string RoamingSettingsFilePath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         Constants.AppName,
         Constants.SettingsFileName);
+    private static readonly string SettingsFilePath = GetSettingsFilePath();
 
     static SettingsManager()
     {
         var directory = Path.GetDirectoryName(SettingsFilePath);
         Directory.CreateDirectory(directory!);
+
+        if (IsPortableMode() &&
+            !File.Exists(SettingsFilePath) &&
+            File.Exists(RoamingSettingsFilePath))
+        {
+            File.Copy(RoamingSettingsFilePath, SettingsFilePath);
+        }
 
         if (!File.Exists(SettingsFilePath))
         {
@@ -223,6 +231,14 @@ public static class SettingsManager
             System.Diagnostics.Debug.WriteLine($"Failed to save settings: {ex.Message}");
         }
     }
+
+    private static string GetSettingsFilePath() =>
+        IsPortableMode()
+            ? Path.Combine(AppContext.BaseDirectory, Constants.SettingsFileName)
+            : RoamingSettingsFilePath;
+
+    private static bool IsPortableMode() =>
+        File.Exists(Path.Combine(AppContext.BaseDirectory, Constants.PortableModeFileName));
 }
 
 internal class AppSettings
