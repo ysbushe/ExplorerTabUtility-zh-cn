@@ -57,4 +57,12 @@
         <Resource Include="Icon.ico"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Update="Strings\Strings.Designer.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>Strings.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>

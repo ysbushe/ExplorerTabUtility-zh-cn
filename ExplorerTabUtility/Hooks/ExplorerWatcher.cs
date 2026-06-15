@@ -15,6 +15,7 @@ using ExplorerTabUtility.Managers;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.WinAPI;
 using ExplorerTabUtility.UI.Views;
+using ExplorerTabUtility.Strings;
 
 namespace ExplorerTabUtility.Hooks;
 
@@ -523,8 +524,8 @@ public class ExplorerWatcher : IHook
     private async Task RestorePreviousWindows()
     {
         var result = await RunInStaThread(() => CustomMessageBox.Show(
-            "Do you want to restore previously opened windows?",
-            "Explorer Tab Utility",
+            Strings.MsgRestoreWindows,
+            Strings.AppTitle,
             MessageBoxButton.YesNo,
             MessageBoxImage.Question));
 

@@ -6,6 +6,7 @@
              xmlns:converters="clr-namespace:ExplorerTabUtility.UI.Converters"
              xmlns:views="clr-namespace:ExplorerTabUtility.UI.Views"
              xmlns:models="clr-namespace:ExplorerTabUtility.Models"
+             xmlns:strings="clr-namespace:ExplorerTabUtility.Strings"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="800"
              Loaded="AboutView_Loaded">
@@ -379,7 +380,7 @@
                         </Border>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="Explorer Tab Utility"
+                            <TextBlock Text="{x:Static strings:Strings.AppTitle}"
                                        Style="{StaticResource AppTitleStyle}"
                                        MouseLeftButtonUp="OpenProjectPage">
                                 <TextBlock.Effect>
@@ -405,7 +406,7 @@
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
 
-                        <TextBlock Text="Enhance your Windows File Explorer experience"
+                        <TextBlock Text="{x:Static strings:Strings.AboutSubtitle}"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,4" />
@@ -450,7 +451,7 @@
                                         <ScaleTransform ScaleX="1" ScaleY="1" />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                                <TextBlock Text="Star on GitHub"
+                                <TextBlock Text="{x:Static strings:Strings.AboutStarGitHub}"
                                            FontWeight="SemiBold"
                                            VerticalAlignment="Center" />
                             </StackPanel>
@@ -468,10 +469,10 @@
 
                     <!-- Left Column: Support Options -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Support the Project"
+                        <TextBlock Text="{x:Static strings:Strings.AboutSupportProject}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="If you find this utility helpful, consider supporting its development through one of these options:"
+                        <TextBlock Text="{x:Static strings:Strings.AboutSupportDesc}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -532,7 +533,7 @@
                         <Border Margin="0,24,0,0" CornerRadius="8"
                                 Style="{StaticResource ProfileCardStyle}">
                             <StackPanel>
-                                <TextBlock Text="Developer"
+                                <TextBlock Text="{x:Static strings:Strings.AboutDeveloper}"
                                            FontWeight="SemiBold"
                                            FontSize="18"
                                            Foreground="{StaticResource TextPrimaryBrush}"
@@ -591,10 +592,10 @@
 
                     <!-- Right Column: Supporters -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Current Supporters"
+                        <TextBlock Text="{x:Static strings:Strings.AboutCurrentSupporters}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="Thank you to all the amazing people who support this project!"
+                        <TextBlock Text="{x:Static strings:Strings.AboutSupportersDesc}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -631,13 +632,13 @@
                                                                                               Opacity="0.5" />
                                                                         </TextBlock.Effect>
                                                                     </TextBlock>
-                                                                    <TextBlock Text="Be the first to support this project!"
+                                                                    <TextBlock Text="{x:Static strings:Strings.AboutBeFirst}"
                                                                                TextWrapping="Wrap"
                                                                                FontSize="16"
                                                                                FontWeight="Medium"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"
                                                                                HorizontalAlignment="Center" />
-                                                                    <TextBlock Text="Your support helps keep this project alive"
+                                                                    <TextBlock Text="{x:Static strings:Strings.AboutKeepAlive}"
                                                                                TextWrapping="Wrap"
                                                                                Margin="0,8,0,0"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"

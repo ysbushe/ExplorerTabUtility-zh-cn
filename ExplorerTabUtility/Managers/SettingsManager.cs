@@ -190,6 +190,16 @@ public static class SettingsManager
         }
     }
 
+    public static string Language
+    {
+        get => Settings.Language;
+        set
+        {
+            Settings.Language = value;
+            SaveSettings();
+        }
+    }
+
 
     public static void SaveSettings()
     {
@@ -221,4 +231,5 @@ internal class AppSettings
     public bool SaveClosedWindows { get; set; }
     public bool RestorePreviousWindows { get; set; }
     public WindowRecord[]? ClosedWindows { get; set; }
+    public string Language { get; set; } = "Auto";
 }

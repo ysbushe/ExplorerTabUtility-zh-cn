@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="0" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- MainWindow -->
+  <data name="AppTitle" xml:space="preserve">
+    <value>Explorer Tab Utility</value>
+  </data>
+  <data name="NavShortcuts" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="NavPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="NavAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="BtnNew" xml:space="preserve">
+    <value>NEW</value>
+  </data>
+  <data name="BtnImport" xml:space="preserve">
+    <value>IMPORT</value>
+  </data>
+  <data name="BtnExport" xml:space="preserve">
+    <value>EXPORT</value>
+  </data>
+  <data name="BtnSave" xml:space="preserve">
+    <value>SAVE</value>
+  </data>
+  <data name="CbAutoSave" xml:space="preserve">
+    <value>Auto save</value>
+  </data>
+  <data name="GrpAppSettings" xml:space="preserve">
+    <value>Application Settings</value>
+  </data>
+  <data name="CbAutoUpdate" xml:space="preserve">
+    <value>Auto update</value>
+  </data>
+  <data name="CbThemeIssue" xml:space="preserve">
+    <value>I have theme issues</value>
+  </data>
+  <data name="CbSaveClosedHistory" xml:space="preserve">
+    <value>Save closed history</value>
+  </data>
+  <data name="CbRestorePrevious" xml:space="preserve">
+    <value>Restore previous windows</value>
+  </data>
+  <data name="CbHideTrayIcon" xml:space="preserve">
+    <value>Hide tray icon</value>
+  </data>
+  <data name="StatusWindowHook" xml:space="preserve">
+    <value>Window Hook</value>
+  </data>
+  <data name="StatusReuseTabs" xml:space="preserve">
+    <value>Reuse Tabs</value>
+  </data>
+  <data name="StatusKeyboardHook" xml:space="preserve">
+    <value>Keyboard Hook</value>
+  </data>
+  <data name="StatusMouseHook" xml:space="preserve">
+    <value>Mouse Hook</value>
+  </data>
+
+  <!-- ToolTips MainWindow -->
+  <data name="TipOpenAppMenu" xml:space="preserve">
+    <value>Open application menu</value>
+  </data>
+  <data name="TipConfigureShortcuts" xml:space="preserve">
+    <value>Configure keyboard and mouse shortcuts</value>
+  </data>
+  <data name="TipConfigureSettings" xml:space="preserve">
+    <value>Configure application settings</value>
+  </data>
+  <data name="TipAboutApp" xml:space="preserve">
+    <value>About the application and support options</value>
+  </data>
+  <data name="TipCreateProfile" xml:space="preserve">
+    <value>Create a new profile</value>
+  </data>
+  <data name="TipImportProfiles" xml:space="preserve">
+    <value>Import profiles from a file</value>
+  </data>
+  <data name="TipExportProfiles" xml:space="preserve">
+    <value>Export profiles to a file</value>
+  </data>
+  <data name="TipSaveProfiles" xml:space="preserve">
+    <value>Persist all profile changes</value>
+  </data>
+  <data name="TipAutoSave" xml:space="preserve">
+    <value>Automatically save profiles when closing the window</value>
+  </data>
+  <data name="TipAutoUpdate" xml:space="preserve">
+    <value>Automatically check for updates on startup</value>
+  </data>
+  <data name="TipThemeIssue" xml:space="preserve">
+    <value>Use alternative window hiding method that preserves your custom File-Explorer theme.&#x0a;Enable this if you have theme-related issues</value>
+  </data>
+  <data name="TipSaveClosedHistory" xml:space="preserve">
+    <value>Save closed windows history so you can reopen them later (ReopenClosed, Tab search)</value>
+  </data>
+  <data name="TipRestorePrevious" xml:space="preserve">
+    <value>Restore previously opened windows after restart or crash</value>
+  </data>
+  <data name="TipHideTrayIcon" xml:space="preserve">
+    <value>Hide the system tray icon</value>
+  </data>
+
+  <!-- SystemTrayIcon -->
+  <data name="MenuKeyboardHook" xml:space="preserve">
+    <value>Keyboard Hook</value>
+  </data>
+  <data name="MenuMouseHook" xml:space="preserve">
+    <value>Mouse Hook</value>
+  </data>
+  <data name="MenuWindowHook" xml:space="preserve">
+    <value>Window Hook</value>
+  </data>
+  <data name="MenuReuseTabs" xml:space="preserve">
+    <value>Reuse Tabs</value>
+  </data>
+  <data name="MenuAddToStartup" xml:space="preserve">
+    <value>Add to startup</value>
+  </data>
+  <data name="MenuCheckUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+
+  <!-- ToolTips SystemTrayIcon -->
+  <data name="TipEnableKeyboard" xml:space="preserve">
+    <value>Enable or disable keyboard shortcuts</value>
+  </data>
+  <data name="TipEnableMouse" xml:space="preserve">
+    <value>Enable or disable mouse shortcuts</value>
+  </data>
+  <data name="TipToggleWindowHook" xml:space="preserve">
+    <value>Toggle automatic redirection of new Explorer windows to tabs</value>
+  </data>
+  <data name="TipToggleReuseTabs" xml:space="preserve">
+    <value>When enabled, navigates to existing tabs instead of opening duplicate tabs</value>
+  </data>
+  <data name="TipToggleStartup" xml:space="preserve">
+    <value>Automatically start Explorer Tab Utility when Windows starts</value>
+  </data>
+  <data name="TipCheckUpdates" xml:space="preserve">
+    <value>Check if a newer version of Explorer Tab Utility is available</value>
+  </data>
+  <data name="TipOpenSettings" xml:space="preserve">
+    <value>Open the settings window to configure the application</value>
+  </data>
+  <data name="TipExitApp" xml:space="preserve">
+    <value>Close Explorer Tab Utility and stop all hooks</value>
+  </data>
+
+  <!-- HotKeyProfileControl -->
+  <data name="ProfileHandled" xml:space="preserve">
+    <value>Handled</value>
+  </data>
+  <data name="ProfileTab" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="ProfileDelay" xml:space="preserve">
+    <value>Delay</value>
+  </data>
+  <data name="TipEnableProfile" xml:space="preserve">
+    <value>Enable or disable this profile</value>
+  </data>
+  <data name="TipProfileName" xml:space="preserve">
+    <value>Name of the profile</value>
+  </data>
+  <data name="TipProfileHotkeys" xml:space="preserve">
+    <value>Keyboard or mouse keys to listen for. Click to record a new key combination.</value>
+  </data>
+  <data name="TipProfileScope" xml:space="preserve">
+    <value>Scope of the hotkeys: Global (anywhere) or only when File Explorer is focused</value>
+  </data>
+  <data name="TipProfileAction" xml:space="preserve">
+    <value>Action to perform when the hotkeys are pressed</value>
+  </data>
+  <data name="TipShowMore" xml:space="preserve">
+    <value>Show more options</value>
+  </data>
+  <data name="TipDeleteProfile" xml:space="preserve">
+    <value>Delete this profile</value>
+  </data>
+  <data name="TipProfilePath" xml:space="preserve">
+    <value>Path to open when the hotkeys are pressed. (folder, file, website, CLSID)</value>
+  </data>
+  <data name="TipProfileDelay" xml:space="preserve">
+    <value>Delay in milliseconds before performing the action</value>
+  </data>
+  <data name="TipProfileHandled" xml:space="preserve">
+    <value>Prevent further processing of the hotkeys in other applications</value>
+  </data>
+  <data name="TipProfileAsTab" xml:space="preserve">
+    <value>Open as tab instead of a new window</value>
+  </data>
+
+  <!-- TabSearchPopup -->
+  <data name="TipClearHistory" xml:space="preserve">
+    <value>Clear closed windows history</value>
+  </data>
+  <data name="ConfirmClearHistory" xml:space="preserve">
+    <value>Are you sure you want to clear the closed windows history?</value>
+  </data>
+  <data name="ConfirmClearHistoryTitle" xml:space="preserve">
+    <value>Confirm Clear History</value>
+  </data>
+
+  <!-- AboutView -->
+  <data name="AboutSubtitle" xml:space="preserve">
+    <value>Enhance your Windows File Explorer experience</value>
+  </data>
+  <data name="AboutStarGitHub" xml:space="preserve">
+    <value>Star on GitHub</value>
+  </data>
+  <data name="AboutSupportProject" xml:space="preserve">
+    <value>Support the Project</value>
+  </data>
+  <data name="AboutSupportDesc" xml:space="preserve">
+    <value>If you find this utility helpful, consider supporting its development through one of these options:</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="AboutCurrentSupporters" xml:space="preserve">
+    <value>Current Supporters</value>
+  </data>
+  <data name="AboutSupportersDesc" xml:space="preserve">
+    <value>Thank you to all the amazing people who support this project!</value>
+  </data>
+  <data name="AboutBeFirst" xml:space="preserve">
+    <value>Be the first to support this project!</value>
+  </data>
+  <data name="AboutKeepAlive" xml:space="preserve">
+    <value>Your support helps keep this project alive</value>
+  </data>
+
+  <!-- CustomMessageBox -->
+  <data name="BtnOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="BtnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="BtnYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="BtnNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+
+  <!-- Dialog Messages -->
+  <data name="MsgAnotherInstance" xml:space="preserve">
+    <value>Another instance is already running.
+Check in System Tray Icons.</value>
+  </data>
+  <data name="MsgRestoreWindows" xml:space="preserve">
+    <value>Do you want to restore previously opened windows?</value>
+  </data>
+  <data name="MsgToggleVisibility" xml:space="preserve">
+    <value>You can show the app again by pressing {0}</value>
+  </data>
+  <data name="MsgNoToggleVisibility" xml:space="preserve">
+    <value>Cannot hide tray icon if no hotkey is configured to toggle visibility.</value>
+  </data>
+
+  <!-- Constants -->
+  <data name="NotifyIconText" xml:space="preserve">
+    <value>Explorer Tab Utility: Force new windows to tabs.</value>
+  </data>
+
+  <!-- HotKeyAction Descriptions -->
+  <data name="Action_Open" xml:space="preserve">
+    <value>Open a new tab/window with the specified location.</value>
+  </data>
+  <data name="Action_Duplicate" xml:space="preserve">
+    <value>Duplicate the current tab.</value>
+  </data>
+  <data name="Action_ReopenClosed" xml:space="preserve">
+    <value>Reopen the last closed location.</value>
+  </data>
+  <data name="Action_TabSearch" xml:space="preserve">
+    <value>Open tab search popup to find and switch between tabs.</value>
+  </data>
+  <data name="Action_NavigateBack" xml:space="preserve">
+    <value>Navigate back.</value>
+  </data>
+  <data name="Action_NavigateUp" xml:space="preserve">
+    <value>Navigate up.</value>
+  </data>
+  <data name="Action_NavigateForward" xml:space="preserve">
+    <value>Navigate forward.</value>
+  </data>
+  <data name="Action_SetTargetWindow" xml:space="preserve">
+    <value>Mark the window that will receive the new tabs.</value>
+  </data>
+  <data name="Action_ToggleWinHook" xml:space="preserve">
+    <value>Toggle the window hook.</value>
+  </data>
+  <data name="Action_ToggleReuseTabs" xml:space="preserve">
+    <value>Toggle the reuse tabs option.</value>
+  </data>
+  <data name="Action_ToggleVisibility" xml:space="preserve">
+    <value>Show/Hide the app.</value>
+  </data>
+  <data name="Action_DetachTab" xml:space="preserve">
+    <value>Detach the current tab.</value>
+  </data>
+  <data name="Action_SnapRight" xml:space="preserve">
+    <value>Snap the current window to the right.</value>
+  </data>
+  <data name="Action_SnapLeft" xml:space="preserve">
+    <value>Snap the current window to the left.</value>
+  </data>
+  <data name="Action_SnapUp" xml:space="preserve">
+    <value>Snap the current window to the top.</value>
+  </data>
+  <data name="Action_SnapDown" xml:space="preserve">
+    <value>Snap the current window to the bottom.</value>
+  </data>
+</root>

@@ -8,6 +8,7 @@ using ExplorerTabUtility.WinAPI;
 using ExplorerTabUtility.Managers;
 using ExplorerTabUtility.Helpers;
 using ExplorerTabUtility.Models;
+using ExplorerTabUtility.Strings;
 using ExplorerTabUtility.UI.Views.Controls;
 
 namespace ExplorerTabUtility.UI.Views;
@@ -201,10 +202,10 @@ public partial class MainWindow : Window
         if (isChecked && showAlert && !SettingsManager.IsTrayIconHidden)
         {
             var message = canToggleVisibility
-                ? $"You can show the app again by pressing {profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick)}"
-                : "Cannot hide tray icon if no hotkey is configured to toggle visibility.";
+                ? string.Format(Strings.MsgToggleVisibility, profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick))
+                : Strings.MsgNoToggleVisibility;
 
-            CustomMessageBox.Show(this, message, Constants.AppName);
+            CustomMessageBox.Show(this, message, Strings.AppTitle);
         }
 
         var newCheckedState = canToggleVisibility && isChecked;

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="0" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- MainWindow -->
+  <data name="AppTitle" xml:space="preserve">
+    <value>资源管理器标签页工具</value>
+  </data>
+  <data name="NavShortcuts" xml:space="preserve">
+    <value>快捷键</value>
+  </data>
+  <data name="NavPreferences" xml:space="preserve">
+    <value>偏好设置</value>
+  </data>
+  <data name="NavAbout" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="BtnNew" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="BtnImport" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="BtnExport" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="BtnSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="CbAutoSave" xml:space="preserve">
+    <value>自动保存</value>
+  </data>
+  <data name="GrpAppSettings" xml:space="preserve">
+    <value>应用设置</value>
+  </data>
+  <data name="CbAutoUpdate" xml:space="preserve">
+    <value>自动更新</value>
+  </data>
+  <data name="CbThemeIssue" xml:space="preserve">
+    <value>我有主题兼容问题</value>
+  </data>
+  <data name="CbSaveClosedHistory" xml:space="preserve">
+    <value>保存已关闭历史</value>
+  </data>
+  <data name="CbRestorePrevious" xml:space="preserve">
+    <value>恢复上次窗口</value>
+  </data>
+  <data name="CbHideTrayIcon" xml:space="preserve">
+    <value>隐藏托盘图标</value>
+  </data>
+  <data name="StatusWindowHook" xml:space="preserve">
+    <value>窗口监控</value>
+  </data>
+  <data name="StatusReuseTabs" xml:space="preserve">
+    <value>复用标签页</value>
+  </data>
+  <data name="StatusKeyboardHook" xml:space="preserve">
+    <value>快捷键监控</value>
+  </data>
+  <data name="StatusMouseHook" xml:space="preserve">
+    <value>鼠标监控</value>
+  </data>
+
+  <!-- ToolTips MainWindow -->
+  <data name="TipOpenAppMenu" xml:space="preserve">
+    <value>打开应用菜单</value>
+  </data>
+  <data name="TipConfigureShortcuts" xml:space="preserve">
+    <value>配置键盘和鼠标快捷键</value>
+  </data>
+  <data name="TipConfigureSettings" xml:space="preserve">
+    <value>配置应用设置</value>
+  </data>
+  <data name="TipAboutApp" xml:space="preserve">
+    <value>关于应用和支持选项</value>
+  </data>
+  <data name="TipCreateProfile" xml:space="preserve">
+    <value>创建新配置</value>
+  </data>
+  <data name="TipImportProfiles" xml:space="preserve">
+    <value>从文件导入配置</value>
+  </data>
+  <data name="TipExportProfiles" xml:space="preserve">
+    <value>将配置导出到文件</value>
+  </data>
+  <data name="TipSaveProfiles" xml:space="preserve">
+    <value>保存所有配置更改</value>
+  </data>
+  <data name="TipAutoSave" xml:space="preserve">
+    <value>关闭窗口时自动保存配置</value>
+  </data>
+  <data name="TipAutoUpdate" xml:space="preserve">
+    <value>启动时自动检查更新</value>
+  </data>
+  <data name="TipThemeIssue" xml:space="preserve">
+    <value>使用替代的窗口隐藏方法，保留自定义资源管理器主题。&#x0a;如果有主题相关问题请启用此项</value>
+  </data>
+  <data name="TipSaveClosedHistory" xml:space="preserve">
+    <value>保存已关闭窗口的历史记录，以便稍后重新打开（重开已关闭、标签页搜索）</value>
+  </data>
+  <data name="TipRestorePrevious" xml:space="preserve">
+    <value>在重启或崩溃后恢复之前打开的窗口</value>
+  </data>
+  <data name="TipHideTrayIcon" xml:space="preserve">
+    <value>隐藏系统托盘图标</value>
+  </data>
+
+  <!-- SystemTrayIcon -->
+  <data name="MenuKeyboardHook" xml:space="preserve">
+    <value>快捷键监控</value>
+  </data>
+  <data name="MenuMouseHook" xml:space="preserve">
+    <value>鼠标监控</value>
+  </data>
+  <data name="MenuWindowHook" xml:space="preserve">
+    <value>窗口监控</value>
+  </data>
+  <data name="MenuReuseTabs" xml:space="preserve">
+    <value>复用标签页</value>
+  </data>
+  <data name="MenuAddToStartup" xml:space="preserve">
+    <value>开机启动</value>
+  </data>
+  <data name="MenuCheckUpdates" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+
+  <!-- ToolTips SystemTrayIcon -->
+  <data name="TipEnableKeyboard" xml:space="preserve">
+    <value>启用或禁用键盘快捷键</value>
+  </data>
+  <data name="TipEnableMouse" xml:space="preserve">
+    <value>启用或禁用鼠标快捷键</value>
+  </data>
+  <data name="TipToggleWindowHook" xml:space="preserve">
+    <value>切换新资源管理器窗口自动重定向为标签页</value>
+  </data>
+  <data name="TipToggleReuseTabs" xml:space="preserve">
+    <value>启用后，导航到已有标签页而非打开重复标签</value>
+  </data>
+  <data name="TipToggleStartup" xml:space="preserve">
+    <value>Windows 启动时自动运行 Explorer Tab Utility</value>
+  </data>
+  <data name="TipCheckUpdates" xml:space="preserve">
+    <value>检查 Explorer Tab Utility 是否有新版本</value>
+  </data>
+  <data name="TipOpenSettings" xml:space="preserve">
+    <value>打开设置窗口配置应用程序</value>
+  </data>
+  <data name="TipExitApp" xml:space="preserve">
+    <value>关闭 Explorer Tab Utility 并停止所有监控</value>
+  </data>
+
+  <!-- HotKeyProfileControl -->
+  <data name="ProfileHandled" xml:space="preserve">
+    <value>拦截</value>
+  </data>
+  <data name="ProfileTab" xml:space="preserve">
+    <value>标签页</value>
+  </data>
+  <data name="ProfileDelay" xml:space="preserve">
+    <value>延迟</value>
+  </data>
+  <data name="TipEnableProfile" xml:space="preserve">
+    <value>启用或禁用此配置</value>
+  </data>
+  <data name="TipProfileName" xml:space="preserve">
+    <value>配置名称</value>
+  </data>
+  <data name="TipProfileHotkeys" xml:space="preserve">
+    <value>要监听的键盘或鼠标键。点击录制新的按键组合。</value>
+  </data>
+  <data name="TipProfileScope" xml:space="preserve">
+    <value>快捷键的作用范围：全局（任何地方）或仅在资源管理器中</value>
+  </data>
+  <data name="TipProfileAction" xml:space="preserve">
+    <value>按下快捷键时执行的操作</value>
+  </data>
+  <data name="TipShowMore" xml:space="preserve">
+    <value>显示更多选项</value>
+  </data>
+  <data name="TipDeleteProfile" xml:space="preserve">
+    <value>删除此配置</value>
+  </data>
+  <data name="TipProfilePath" xml:space="preserve">
+    <value>按下快捷键时要打开的路径（文件夹、文件、网址、CLSID）</value>
+  </data>
+  <data name="TipProfileDelay" xml:space="preserve">
+    <value>执行操作前的延迟（毫秒）</value>
+  </data>
+  <data name="TipProfileHandled" xml:space="preserve">
+    <value>阻止其他应用处理此快捷键</value>
+  </data>
+  <data name="TipProfileAsTab" xml:space="preserve">
+    <value>作为标签页而非新窗口打开</value>
+  </data>
+
+  <!-- TabSearchPopup -->
+  <data name="TipClearHistory" xml:space="preserve">
+    <value>清空已关闭窗口历史</value>
+  </data>
+  <data name="ConfirmClearHistory" xml:space="preserve">
+    <value>确定要清除已关闭窗口的历史记录吗？</value>
+  </data>
+  <data name="ConfirmClearHistoryTitle" xml:space="preserve">
+    <value>确认清空历史</value>
+  </data>
+
+  <!-- AboutView -->
+  <data name="AboutSubtitle" xml:space="preserve">
+    <value>增强您的 Windows 资源管理器体验</value>
+  </data>
+  <data name="AboutStarGitHub" xml:space="preserve">
+    <value>在 GitHub 上标星</value>
+  </data>
+  <data name="AboutSupportProject" xml:space="preserve">
+    <value>支持本项目</value>
+  </data>
+  <data name="AboutSupportDesc" xml:space="preserve">
+    <value>如果您觉得本工具实用，可以通过以下方式支持开发：</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>开发者</value>
+  </data>
+  <data name="AboutCurrentSupporters" xml:space="preserve">
+    <value>当前支持者</value>
+  </data>
+  <data name="AboutSupportersDesc" xml:space="preserve">
+    <value>感谢所有支持本项目的朋友们！</value>
+  </data>
+  <data name="AboutBeFirst" xml:space="preserve">
+    <value>成为第一个支持本项目的人！</value>
+  </data>
+  <data name="AboutKeepAlive" xml:space="preserve">
+    <value>您的支持有助于本项目的持续发展</value>
+  </data>
+
+  <!-- CustomMessageBox -->
+  <data name="BtnOK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="BtnCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="BtnYes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="BtnNo" xml:space="preserve">
+    <value>否</value>
+  </data>
+
+  <!-- Dialog Messages -->
+  <data name="MsgAnotherInstance" xml:space="preserve">
+    <value>程序已在运行。
+请检查系统托盘图标。</value>
+  </data>
+  <data name="MsgRestoreWindows" xml:space="preserve">
+    <value>是否恢复之前打开的窗口？</value>
+  </data>
+  <data name="MsgToggleVisibility" xml:space="preserve">
+    <value>您可以通过按 {0} 重新显示程序</value>
+  </data>
+  <data name="MsgNoToggleVisibility" xml:space="preserve">
+    <value>未配置显示/隐藏快捷键，无法隐藏托盘图标。</value>
+  </data>
+
+  <!-- Constants -->
+  <data name="NotifyIconText" xml:space="preserve">
+    <value>资源管理器标签页工具：强制新窗口变为标签页。</value>
+  </data>
+
+  <!-- HotKeyAction Descriptions -->
+  <data name="Action_Open" xml:space="preserve">
+    <value>打开指定位置的新标签页/窗口。</value>
+  </data>
+  <data name="Action_Duplicate" xml:space="preserve">
+    <value>复制当前标签页。</value>
+  </data>
+  <data name="Action_ReopenClosed" xml:space="preserve">
+    <value>重新打开最近关闭的位置。</value>
+  </data>
+  <data name="Action_TabSearch" xml:space="preserve">
+    <value>打开标签页搜索弹窗。</value>
+  </data>
+  <data name="Action_NavigateBack" xml:space="preserve">
+    <value>后退。</value>
+  </data>
+  <data name="Action_NavigateUp" xml:space="preserve">
+    <value>向上一级。</value>
+  </data>
+  <data name="Action_NavigateForward" xml:space="preserve">
+    <value>前进。</value>
+  </data>
+  <data name="Action_SetTargetWindow" xml:space="preserve">
+    <value>标记接收新标签的窗口。</value>
+  </data>
+  <data name="Action_ToggleWinHook" xml:space="preserve">
+    <value>切换窗口监控。</value>
+  </data>
+  <data name="Action_ToggleReuseTabs" xml:space="preserve">
+    <value>切换复用标签页选项。</value>
+  </data>
+  <data name="Action_ToggleVisibility" xml:space="preserve">
+    <value>显示/隐藏主窗口。</value>
+  </data>
+  <data name="Action_DetachTab" xml:space="preserve">
+    <value>分离当前标签页。</value>
+  </data>
+  <data name="Action_SnapRight" xml:space="preserve">
+    <value>将窗口贴靠到右侧。</value>
+  </data>
+  <data name="Action_SnapLeft" xml:space="preserve">
+    <value>将窗口贴靠到左侧。</value>
+  </data>
+  <data name="Action_SnapUp" xml:space="preserve">
+    <value>将窗口贴靠到顶部。</value>
+  </data>
+  <data name="Action_SnapDown" xml:space="preserve">
+    <value>将窗口贴靠到底部。</value>
+  </data>
+</root>

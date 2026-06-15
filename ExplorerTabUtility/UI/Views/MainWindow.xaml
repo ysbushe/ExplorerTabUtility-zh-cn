@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ExplorerTabUtility.UI.Views"
         xmlns:managers="clr-namespace:ExplorerTabUtility.Managers"
-        Title="Explorer Tab Utility"
+        xmlns:strings="clr-namespace:ExplorerTabUtility.Strings"
+        Title="{x:Static strings:Strings.AppTitle}"
         Width="850" Height="600"
         MinWidth="700" MinHeight="175"
         AllowsTransparency="True"
@@ -36,10 +37,10 @@
 
                     <!-- Menu Button -->
                     <ToggleButton x:Name="DrawerButton" Grid.Column="0" Style="{StaticResource ToggleButtonIconStyle}" Margin="6,0,0,0"
-                                  Content="&#x2630;" Focusable="False" ToolTip="Open application menu" />
+                                  Content="&#x2630;" Focusable="False" ToolTip="{x:Static strings:Strings.TipOpenAppMenu}" />
 
                     <!-- Window Title -->
-                    <TextBlock Grid.Column="1" Text="Explorer Tab Utility" VerticalAlignment="Center" Margin="8,0"
+                    <TextBlock Grid.Column="1" Text="{x:Static strings:Strings.AppTitle}" VerticalAlignment="Center" Margin="8,0"
                                Foreground="{StaticResource TextPrimaryBrush}"
                                FontWeight="SemiBold"
                                FontSize="14" />
@@ -105,14 +106,14 @@
                                         <BeginStoryboard Storyboard="{StaticResource CloseDrawerStoryboard}"/>
                                     </EventTrigger>
                                 </ListBox.Triggers>
-                                <ListBoxItem ToolTip="Configure keyboard and mouse shortcuts">
-                                    <TextBlock Text="&#x1F5F2;  Shortcuts" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{x:Static strings:Strings.TipConfigureShortcuts}">
+                                    <TextBlock Text="{x:Static strings:Strings.NavShortcuts}" VerticalAlignment="Center" />
                                 </ListBoxItem>
-                                <ListBoxItem ToolTip="Configure application settings">
-                                    <TextBlock Text="&#xE713;  Preferences" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{x:Static strings:Strings.TipConfigureSettings}">
+                                    <TextBlock Text="{x:Static strings:Strings.NavPreferences}" VerticalAlignment="Center" />
                                 </ListBoxItem>
-                                <ListBoxItem ToolTip="About the application and support options">
-                                    <TextBlock Text="&#xE939;  About" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{x:Static strings:Strings.TipAboutApp}">
+                                    <TextBlock Text="{x:Static strings:Strings.NavAbout}" VerticalAlignment="Center" />
                                 </ListBoxItem>
                             </ListBox>
                         </DockPanel>
@@ -166,7 +167,7 @@
                                                   Color="{StaticResource ShadowColor}" />
                             </TabControl.Effect>
                             <!-- Shortcuts Tab -->
-                            <TabItem Header="Shortcuts" Visibility="Collapsed">
+                            <TabItem Header="{x:Static strings:Strings.NavShortcuts}" Visibility="Collapsed">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -177,20 +178,20 @@
                                     <DockPanel Grid.Row="0" Margin="16,8" LastChildFill="False">
                                         <!-- Action Buttons -->
                                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                                            <Button x:Name="BtnNewProfile" Content="NEW" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="Create a new profile" />
-                                            <Button x:Name="BtnImport" Content="IMPORT" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="Import profiles from a file" />
-                                            <Button x:Name="BtnExport" Content="EXPORT" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="Export profiles to a file" />
-                                            <Button x:Name="BtnSave" Content="SAVE" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="Persist all profile changes" />
+                                            <Button x:Name="BtnNewProfile" Content="{x:Static strings:Strings.BtnNew}" Style="{StaticResource FlatButtonStyle}"
+                                                    ToolTip="{x:Static strings:Strings.TipCreateProfile}" />
+                                            <Button x:Name="BtnImport" Content="{x:Static strings:Strings.BtnImport}" Style="{StaticResource FlatButtonStyle}"
+                                                    ToolTip="{x:Static strings:Strings.TipImportProfiles}" />
+                                            <Button x:Name="BtnExport" Content="{x:Static strings:Strings.BtnExport}" Style="{StaticResource FlatButtonStyle}"
+                                                    ToolTip="{x:Static strings:Strings.TipExportProfiles}" />
+                                            <Button x:Name="BtnSave" Content="{x:Static strings:Strings.BtnSave}" Style="{StaticResource FlatButtonStyle}"
+                                                    ToolTip="{x:Static strings:Strings.TipSaveProfiles}" />
                                         </StackPanel>
 
                                         <!-- Save on Exit Toggle -->
                                         <CheckBox DockPanel.Dock="Right" x:Name="CbAutoSaveProfiles"
-                                                  Content="Auto save" Style="{StaticResource CustomCheckBoxStyle}"
-                                                  ToolTip="Automatically save profiles when closing the window" />
+                                                  Content="{x:Static strings:Strings.CbAutoSave}" Style="{StaticResource CustomCheckBoxStyle}"
+                                                  ToolTip="{x:Static strings:Strings.TipAutoSave}" />
                                     </DockPanel>
 
                                     <!-- Profiles Panel -->
@@ -203,33 +204,33 @@
                             </TabItem>
 
                             <!-- Preferences Tab -->
-                            <TabItem Header="Preferences" Visibility="Collapsed">
+                            <TabItem Header="{x:Static strings:Strings.NavPreferences}" Visibility="Collapsed">
                                 <StackPanel Margin="16, 8">
-                                    <GroupBox Header="Application Settings"
+                                    <GroupBox Header="{x:Static strings:Strings.GrpAppSettings}"
                                               Style="{StaticResource CustomGroupBoxStyle}">
                                         <StackPanel Margin="8">
-                                            <CheckBox x:Name="CbAutoUpdate" Content="Auto update"
+                                            <CheckBox x:Name="CbAutoUpdate" Content="{x:Static strings:Strings.CbAutoUpdate}"
                                                       Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="Automatically check for updates on startup" />
-                                            <CheckBox x:Name="CbThemeIssue" Content="I have theme issues"
+                                                      ToolTip="{x:Static strings:Strings.TipAutoUpdate}" />
+                                            <CheckBox x:Name="CbThemeIssue" Content="{x:Static strings:Strings.CbThemeIssue}"
                                                       Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="Use alternative window hiding method that preserves your custom File-Explorer theme.&#x0a;Enable this if you have theme-related issues" />
-                                            <CheckBox x:Name="CbSaveClosedHistory" Content="Save closed history"
+                                                      ToolTip="{x:Static strings:Strings.TipThemeIssue}" />
+                                            <CheckBox x:Name="CbSaveClosedHistory" Content="{x:Static strings:Strings.CbSaveClosedHistory}"
                                                       Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="Save closed windows history so you can reopen them later (ReopenClosed, Tab search)" />
-                                            <CheckBox x:Name="CbRestorePreviousWindows" Content="Restore previous windows"
+                                                      ToolTip="{x:Static strings:Strings.TipSaveClosedHistory}" />
+                                            <CheckBox x:Name="CbRestorePreviousWindows" Content="{x:Static strings:Strings.CbRestorePrevious}"
                                                       Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="Restore previously opened windows after restart or crash" />
-                                            <CheckBox x:Name="CbHideTrayIcon" Content="Hide tray icon"
+                                                      ToolTip="{x:Static strings:Strings.TipRestorePrevious}" />
+                                            <CheckBox x:Name="CbHideTrayIcon" Content="{x:Static strings:Strings.CbHideTrayIcon}"
                                                       Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="Hide the system tray icon" />
+                                                      ToolTip="{x:Static strings:Strings.TipHideTrayIcon}" />
                                         </StackPanel>
                                     </GroupBox>
                                 </StackPanel>
                             </TabItem>
 
                             <!-- About Tab -->
-                            <TabItem Header="About" Visibility="Collapsed">
+                            <TabItem Header="{x:Static strings:Strings.NavAbout}" Visibility="Collapsed">
                                 <local:AboutView />
                             </TabItem>
                         </TabControl>
@@ -262,7 +263,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="Window Hook" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static strings:Strings.StatusWindowHook}" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
 
                         <!-- Reuse Tabs Status -->
@@ -286,7 +287,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="Reuse Tabs" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static strings:Strings.StatusReuseTabs}" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
 
                         <!-- Keyboard Hook Status -->
@@ -310,7 +311,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="Keyboard Hook" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static strings:Strings.StatusKeyboardHook}" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
 
                         <!-- Mouse Hook Status -->
@@ -334,7 +335,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="Mouse Hook" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static strings:Strings.StatusMouseHook}" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
                     </StackPanel>
             </Border>

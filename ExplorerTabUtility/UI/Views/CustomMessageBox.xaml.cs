@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using ExplorerTabUtility.Helpers;
+using ExplorerTabUtility.Strings;
 
 namespace ExplorerTabUtility.UI.Views;
 
@@ -110,20 +111,20 @@ public partial class CustomMessageBox : Window
         switch (buttons)
         {
             case MessageBoxButton.OK:
-                AddButton("OK", MessageBoxResult.OK, defaultButton is MessageBoxResult.None or MessageBoxResult.OK);
+                AddButton(Strings.BtnOK, MessageBoxResult.OK, defaultButton is MessageBoxResult.None or MessageBoxResult.OK);
                 break;
             case MessageBoxButton.OKCancel:
-                AddButton("OK", MessageBoxResult.OK, defaultButton is MessageBoxResult.None or MessageBoxResult.OK);
-                AddButton("Cancel", MessageBoxResult.Cancel, defaultButton is MessageBoxResult.Cancel);
+                AddButton(Strings.BtnOK, MessageBoxResult.OK, defaultButton is MessageBoxResult.None or MessageBoxResult.OK);
+                AddButton(Strings.BtnCancel, MessageBoxResult.Cancel, defaultButton is MessageBoxResult.Cancel);
                 break;
             case MessageBoxButton.YesNo:
-                AddButton("Yes", MessageBoxResult.Yes, defaultButton is MessageBoxResult.None or MessageBoxResult.Yes);
-                AddButton("No", MessageBoxResult.No, defaultButton is MessageBoxResult.No);
+                AddButton(Strings.BtnYes, MessageBoxResult.Yes, defaultButton is MessageBoxResult.None or MessageBoxResult.Yes);
+                AddButton(Strings.BtnNo, MessageBoxResult.No, defaultButton is MessageBoxResult.No);
                 break;
             case MessageBoxButton.YesNoCancel:
-                AddButton("Yes", MessageBoxResult.Yes, defaultButton is MessageBoxResult.None or MessageBoxResult.Yes);
-                AddButton("No", MessageBoxResult.No, defaultButton is MessageBoxResult.No);
-                AddButton("Cancel", MessageBoxResult.Cancel, defaultButton is MessageBoxResult.Cancel);
+                AddButton(Strings.BtnYes, MessageBoxResult.Yes, defaultButton is MessageBoxResult.None or MessageBoxResult.Yes);
+                AddButton(Strings.BtnNo, MessageBoxResult.No, defaultButton is MessageBoxResult.No);
+                AddButton(Strings.BtnCancel, MessageBoxResult.Cancel, defaultButton is MessageBoxResult.Cancel);
                 break;
         }
     }
