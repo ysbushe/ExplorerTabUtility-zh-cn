@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ExplorerTabUtility-zh-CN-net9-windows
-          path: ${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/net9.0-windows/
+          path: ${{ env.PROJECT_NAME }}/bin/Any CPU/${{ env.CONFIGURATION }}/net9.0-windows/
           retention-days: 30
 
   build-report:
