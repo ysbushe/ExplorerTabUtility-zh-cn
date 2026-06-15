@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using ExplorerTabUtility.Helpers;
 
@@ -11,7 +13,11 @@ public static class RegistryManager
     private const string StartupApprovedKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run";
     private const string ExplorerAdvancedKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
     private static readonly string? ExecutablePath = Helper.GetExecutablePath();
-    public static bool IsStartupEnabled => IsInStartup() && IsStartupApprovedEnabled();
+    private static readonly string StartupShortcutPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.Startup),
+        $"{Constants.AppName}.lnk");
+    public static bool IsStartupEnabled =>
+        IsStartupShortcutCorrect() || (IsInStartup() && IsStartupApprovedEnabled());
 
     public static void ToggleStartup()
     {
@@ -22,7 +28,10 @@ public static class RegistryManager
         }
         else
         {
-            AddToStartup();
+            if (IsPortableMode())
+                CreateStartupShortcut();
+            else
+                AddToStartup();
             CreatePortableAutoStartMarker();
         }
     }
@@ -33,25 +42,8 @@ public static class RegistryManager
             AppContext.BaseDirectory,
             Constants.PortableAutoStartFileName);
 
-        if (!File.Exists(portableAutoStartPath) ||
-            string.IsNullOrWhiteSpace(ExecutablePath))
-        {
-            return;
-        }
-
-        using var runKey = Registry.CurrentUser.CreateSubKey(RunKeyPath, true);
-        var currentPath = runKey.GetValue(Constants.AppName) as string;
-        if (!string.Equals(currentPath, ExecutablePath, StringComparison.OrdinalIgnoreCase))
-            runKey.SetValue(Constants.AppName, ExecutablePath);
-
-        using var approvedKey = Registry.CurrentUser.CreateSubKey(StartupApprovedKeyPath, true);
-        var approvedValue = approvedKey.GetValue(Constants.AppName) as byte[];
-        if (approvedValue == null || approvedValue.Length == 0 || approvedValue[0] % 2 != 0)
-        {
-            var enabledData = new byte[12];
-            enabledData[0] = 0x02;
-            approvedKey.SetValue(Constants.AppName, enabledData, RegistryValueKind.Binary);
-        }
+        if (File.Exists(portableAutoStartPath) && !IsStartupShortcutCorrect())
+            CreateStartupShortcut();
     }
 
     private static bool IsInStartup()
@@ -76,35 +68,115 @@ public static class RegistryManager
     {
         if (string.IsNullOrWhiteSpace(ExecutablePath)) return;
 
-        // Add to Run registry key
-        using var runKey = OpenCurrentUserKey(RunKeyPath, true);
-        runKey?.SetValue(Constants.AppName, ExecutablePath);
+        try
+        {
+            // Add to Run registry key
+            using var runKey = OpenCurrentUserKey(RunKeyPath, true);
+            runKey?.SetValue(Constants.AppName, ExecutablePath);
 
-        // Create enabled entry in StartupApproved
-        var enabledData = new byte[12];
-        enabledData[0] = 0x02; // Even value for enabled
+            // Create enabled entry in StartupApproved
+            var enabledData = new byte[12];
+            enabledData[0] = 0x02; // Even value for enabled
 
-        using var approvedKey = OpenCurrentUserKey(StartupApprovedKeyPath, true);
-        approvedKey?.SetValue(Constants.AppName, enabledData, RegistryValueKind.Binary);
+            using var approvedKey = OpenCurrentUserKey(StartupApprovedKeyPath, true);
+            approvedKey?.SetValue(Constants.AppName, enabledData, RegistryValueKind.Binary);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Debug.WriteLine($"Failed to add startup registry entry: {ex.Message}");
+        }
     }
 
     private static void RemoveFromStartup()
     {
-        // Remove from Run registry key
-        using var runKey = OpenCurrentUserKey(RunKeyPath, true);
-        runKey?.DeleteValue(Constants.AppName, false);
+        try
+        {
+            // Remove from Run registry key
+            using var runKey = OpenCurrentUserKey(RunKeyPath, true);
+            runKey?.DeleteValue(Constants.AppName, false);
 
-        // Remove from StartupApproved
-        using var approvedKey = OpenCurrentUserKey(StartupApprovedKeyPath, true);
-        approvedKey?.DeleteValue(Constants.AppName, false);
+            // Remove from StartupApproved
+            using var approvedKey = OpenCurrentUserKey(StartupApprovedKeyPath, true);
+            approvedKey?.DeleteValue(Constants.AppName, false);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Debug.WriteLine($"Failed to remove startup registry entry: {ex.Message}");
+        }
+
+        if (File.Exists(StartupShortcutPath))
+            File.Delete(StartupShortcutPath);
+    }
+
+    private static bool IsStartupShortcutCorrect()
+    {
+        if (string.IsNullOrWhiteSpace(ExecutablePath) ||
+            !File.Exists(StartupShortcutPath))
+        {
+            return false;
+        }
+
+        dynamic? shell = null;
+        dynamic? shortcut = null;
+        try
+        {
+            var shellType = Type.GetTypeFromProgID("WScript.Shell");
+            if (shellType == null) return false;
+
+            shell = Activator.CreateInstance(shellType);
+            shortcut = shell?.CreateShortcut(StartupShortcutPath);
+            return string.Equals(
+                shortcut?.TargetPath as string,
+                ExecutablePath,
+                StringComparison.OrdinalIgnoreCase);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to inspect startup shortcut: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            ReleaseComObject(shortcut);
+            ReleaseComObject(shell);
+        }
+    }
+
+    private static void CreateStartupShortcut()
+    {
+        if (string.IsNullOrWhiteSpace(ExecutablePath)) return;
+
+        dynamic? shell = null;
+        dynamic? shortcut = null;
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(StartupShortcutPath)!);
+            var shellType = Type.GetTypeFromProgID("WScript.Shell");
+            if (shellType == null) return;
+
+            shell = Activator.CreateInstance(shellType);
+            shortcut = shell?.CreateShortcut(StartupShortcutPath);
+            if (shortcut == null) return;
+
+            shortcut.TargetPath = ExecutablePath;
+            shortcut.WorkingDirectory = AppContext.BaseDirectory;
+            shortcut.Description = "ExplorerTabUtility portable startup";
+            shortcut.Save();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to create startup shortcut: {ex.Message}");
+        }
+        finally
+        {
+            ReleaseComObject(shortcut);
+            ReleaseComObject(shell);
+        }
     }
 
     private static void CreatePortableAutoStartMarker()
     {
-        var portableModePath = Path.Combine(
-            AppContext.BaseDirectory,
-            Constants.PortableModeFileName);
-        if (!File.Exists(portableModePath)) return;
+        if (!IsPortableMode()) return;
 
         File.WriteAllText(
             Path.Combine(AppContext.BaseDirectory, Constants.PortableAutoStartFileName),
@@ -118,6 +190,15 @@ public static class RegistryManager
             Constants.PortableAutoStartFileName);
         if (File.Exists(markerPath))
             File.Delete(markerPath);
+    }
+
+    private static bool IsPortableMode() =>
+        File.Exists(Path.Combine(AppContext.BaseDirectory, Constants.PortableModeFileName));
+
+    private static void ReleaseComObject(object? value)
+    {
+        if (value != null && Marshal.IsComObject(value))
+            Marshal.FinalReleaseComObject(value);
     }
 
     public static int GetDefaultExplorerLaunchId()
