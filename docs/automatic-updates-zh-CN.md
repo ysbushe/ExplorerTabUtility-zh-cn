@@ -52,8 +52,8 @@ Sync upstream and release zh-CN
 重装 Windows 时只要不格式化该数据盘，程序和配置都会保留。
 
 绿色包是自包含构建，无需重新安装 .NET 9。重装系统会清除 Windows 的开机启动
-注册项，这是操作系统行为，无法由磁盘上的静态文件阻止。重装后手动运行一次
-`ExplorerTabUtility.exe`，程序会重新登记当前路径并恢复开机启动。
+信息，这是操作系统行为，无法由磁盘上的静态文件阻止。重装后双击程序目录中的
+`Enable-Portable-Startup.cmd`，即可重新建立启动快捷方式并启动程序。
 
 ## 仓库可见性
 

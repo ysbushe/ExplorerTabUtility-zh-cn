@@ -153,8 +153,8 @@ jobs:
 
           Copy-Item "LICENSE" "$publishDir/LICENSE"
           Copy-Item "NOTICE.md" "$publishDir/NOTICE.md"
+          Copy-Item "tools/Enable-Portable-Startup.cmd" "$publishDir/Enable-Portable-Startup.cmd"
           Set-Content "$publishDir/portable.mode" "Portable settings are stored beside the executable."
-          Set-Content "$publishDir/portable.autostart" "Restore the current executable path at next launch."
 
       - name: Verify localization payload
         if: steps.sync.outputs.changed == 'true'
@@ -168,6 +168,7 @@ jobs:
             "$publishDir/coreclr.dll",
             "$publishDir/LICENSE",
             "$publishDir/NOTICE.md",
+            "$publishDir/Enable-Portable-Startup.cmd",
             "$publishDir/portable.mode"
           )
 
