@@ -200,16 +200,6 @@ public static class SettingsManager
         }
     }
 
-    public static bool DoubleClickEmptySpace
-    {
-        get => Settings.DoubleClickEmptySpace;
-        set
-        {
-            Settings.DoubleClickEmptySpace = value;
-            SaveSettings();
-        }
-    }
-
 
     public static void SaveSettings()
     {
@@ -242,5 +232,4 @@ internal class AppSettings
     public bool RestorePreviousWindows { get; set; }
     public WindowRecord[]? ClosedWindows { get; set; }
     public string Language { get; set; } = "Auto";
-    public bool DoubleClickEmptySpace { get; set; }
 }

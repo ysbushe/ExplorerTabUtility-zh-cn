@@ -10,7 +10,6 @@ using ExplorerTabUtility.Helpers;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Strings;
 using ExplorerTabUtility.UI.Views.Controls;
-using H.Hooks;
 
 namespace ExplorerTabUtility.UI.Views;
 
@@ -44,7 +43,6 @@ public partial class MainWindow : Window
         CbSaveClosedHistory.IsChecked = SettingsManager.SaveClosedHistory;
         CbRestorePreviousWindows.IsChecked = SettingsManager.RestorePreviousWindows;
         InitializeLanguageComboBox();
-        InitializeDoubleClickEmptySpace();
         UpdateTrayIconVisibility(false);
 
         if (SettingsManager.AutoUpdate)
@@ -80,8 +78,6 @@ public partial class MainWindow : Window
         CbHideTrayIcon.Checked += CbHideTrayIcon_CheckedChanged;
         CbHideTrayIcon.Unchecked += CbHideTrayIcon_CheckedChanged;
         CbLanguage.SelectionChanged += CbLanguage_SelectionChanged;
-        CbDoubleClickEmptySpace.Checked += CbDoubleClickEmptySpace_CheckedChanged;
-        CbDoubleClickEmptySpace.Unchecked += CbDoubleClickEmptySpace_CheckedChanged;
 
         // Window events
         SizeChanged += MainWindow_SizeChanged;
@@ -119,69 +115,6 @@ public partial class MainWindow : Window
 
         SettingsManager.Language = newLang;
         CustomMessageBox.Show(Res.TipLanguageRestart, Res.AppTitle);
-    }
-
-    private const string BuiltInDcEmptySpaceProfileId = "BuiltInDoubleClickEmptySpaceNavigateUp";
-
-    private void InitializeDoubleClickEmptySpace()
-    {
-        CbDoubleClickEmptySpace.IsChecked = SettingsManager.DoubleClickEmptySpace;
-        if (SettingsManager.DoubleClickEmptySpace)
-            EnsureDoubleClickEmptySpaceProfile(true);
-    }
-
-    private void CbDoubleClickEmptySpace_CheckedChanged(object sender, RoutedEventArgs e)
-    {
-        var isChecked = CbDoubleClickEmptySpace.IsChecked == true;
-        SettingsManager.DoubleClickEmptySpace = isChecked;
-        EnsureDoubleClickEmptySpaceProfile(isChecked);
-    }
-
-    private void EnsureDoubleClickEmptySpaceProfile(bool enable)
-    {
-        var profiles = _profileManager.GetProfiles();
-        var existing = profiles.FirstOrDefault(p => p.Id.ToString() == BuiltInDcEmptySpaceProfileId);
-
-        if (enable)
-        {
-            if (existing == null)
-            {
-                var profile = new HotKeyProfile
-                {
-                    Id = Guid.Parse(BuiltInDcEmptySpaceProfileId),
-                    Name = "Double-click empty space up",
-                    HotKeys = new[] { H.Hooks.Key.MouseLeft },
-                    Scope = HotkeyScope.FileExplorer,
-                    Action = HotKeyAction.NavigateUp,
-                    IsMouse = true,
-                    IsDoubleClick = true,
-                    IsEnabled = true,
-                    IsAsTab = true
-                };
-                _profileManager.AddProfile(profile);
-            }
-            else
-            {
-                existing.IsEnabled = true;
-            }
-
-            // Ensure mouse hook is started
-            if (!SettingsManager.IsMouseHookActive)
-            {
-                SettingsManager.IsMouseHookActive = true;
-                _hookManager.StartMouseHook();
-            }
-        }
-        else
-        {
-            if (existing != null)
-            {
-                existing.IsEnabled = false;
-            }
-        }
-
-        _profileManager.SaveProfiles();
-        _notifyIconManager.UpdateMenuItems();
     }
 
     private void StartHooks()

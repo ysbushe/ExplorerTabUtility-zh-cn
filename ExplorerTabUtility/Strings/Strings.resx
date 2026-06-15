@@ -327,25 +327,6 @@ Check in System Tray Icons.</value>
     <value>* Language changes will take effect after restarting the application.</value>
   </data>
 
-  <!-- Built-in Double-Click Empty Space -->
-  <data name="GrpMouseFeatures" xml:space="preserve">
-    <value>Mouse Features</value>
-  </data>
-  <data name="CbDoubleClickEmptySpace" xml:space="preserve">
-    <value>Double-click empty space to navigate up</value>
-  </data>
-  <data name="TipDoubleClickEmptySpace" xml:space="preserve">
-    <value>When enabled, double-clicking empty space in File Explorer navigates up one directory level.</value>
-  </data>
-
-  <!-- Scope -->
-  <data name="ScopeGlobal" xml:space="preserve">
-    <value>Global</value>
-  </data>
-  <data name="ScopeFileExplorer" xml:space="preserve">
-    <value>File Explorer</value>
-  </data>
-
   <!-- HotKeyAction Descriptions -->
   <data name="Action_Open" xml:space="preserve">
     <value>Open a new tab/window with the specified location.</value>

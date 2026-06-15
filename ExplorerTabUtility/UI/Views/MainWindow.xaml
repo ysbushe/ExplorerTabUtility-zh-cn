@@ -251,17 +251,6 @@
                                                        Margin="0,4,0,0" />
                                         </StackPanel>
                                     </GroupBox>
-
-                                    <GroupBox Header="{x:Static strings:Res.GrpMouseFeatures}"
-                                              Style="{StaticResource CustomGroupBoxStyle}"
-                                              Margin="0,8,0,0">
-                                        <StackPanel Margin="8">
-                                            <CheckBox x:Name="CbDoubleClickEmptySpace"
-                                                      Content="{x:Static strings:Res.CbDoubleClickEmptySpace}"
-                                                      Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="{x:Static strings:Res.TipDoubleClickEmptySpace}" />
-                                        </StackPanel>
-                                    </GroupBox>
                                 </StackPanel>
                             </TabItem>
 
