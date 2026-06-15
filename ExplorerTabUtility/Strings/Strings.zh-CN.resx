@@ -313,6 +313,20 @@
     <value>资源管理器标签页工具：强制新窗口变为标签页。</value>
   </data>
 
+  <!-- Language Settings -->
+  <data name="GrpLanguage" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="LblLanguage" xml:space="preserve">
+    <value>界面语言</value>
+  </data>
+  <data name="TipLanguage" xml:space="preserve">
+    <value>选择界面语言。更改将在重启程序后生效。</value>
+  </data>
+  <data name="TipLanguageRestart" xml:space="preserve">
+    <value>* 语言设置将在重启程序后生效。</value>
+  </data>
+
   <!-- HotKeyAction Descriptions -->
   <data name="Action_Open" xml:space="preserve">
     <value>打开指定位置的新标签页/窗口。</value>

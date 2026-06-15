@@ -1,7 +1,9 @@
 # ExplorerTabUtility 汉化方案文档
 
 > 分析日期：2026-06-15
+> 实施日期：2026-06-15
 > 目标：完整中文界面（简体中文 zh-CN）
+> 状态：✅ 已实施完成
 
 ---
 
@@ -51,22 +53,24 @@
 
 ---
 
-## 2. 最终推荐：方案 1（直接替换）+ 语言设置项
+## 2. 最终采用：方案 2（.resx 资源文件 + 语言设置项）
 
 ### 选型理由
 
-1. **项目特点**：轻量托盘工具，UI 文本分散在 XAML 和 C# 代码中（80+ 处），不适合复杂的本地化框架
-2. **用户需求**：用户明确表示"尽量用最低资源占用方式实现"
-3. **维护成本**：项目更新频率不高，直接替换的维护成本可接受
-4. **语言切换**：通过简单的语言设置项实现 Auto/English/中文 切换，无需 .resx 的复杂绑定
+1. **保留英文版本**：通过 .resx 资源文件实现双语支持，不破坏原英文版本
+2. **标准化**：使用 .NET 标准的 ResourceManager 机制，无需第三方框架
+3. **低资源占用**：启动时加载一次资源，之后使用内存缓存
+4. **易于维护**：新增语言只需添加对应的 .resx 文件
 
 ### 实施策略
 
-**保留英文标识，替换显示文本：**
-- C# 代码中的字符串常量保持英文（作为内部标识）
-- XAML 中的 Text 属性改为中文
-- 通过 `LanguageManager` 在运行时根据设置切换语言
-- XAML 中使用 `{x:Static}` 绑定到语言资源类
+**使用 .resx 资源文件：**
+- `Strings/Strings.resx` — 默认（英文）资源
+- `Strings/Strings.zh-CN.resx` — 中文资源
+- `Strings/Strings.Designer.cs` — 自动生成的资源访问类
+- `Strings/LanguageManager.cs` — 语言初始化管理器
+- XAML 中使用 `{x:Static local:Strings.PropertyName}` 绑定
+- C# 代码中使用 `Strings.PropertyName` 引用
 
 ---
 
@@ -327,16 +331,37 @@ CustomMessageBox.Show(Strings.AnotherInstanceRunning, Strings.AppName);
 
 ---
 
-## 8. 实施步骤
+## 8. 实施状态
 
-1. 创建 `feature/zh-cn-localization` 分支
-2. 新增语言资源文件（Strings/）
-3. 新增 LanguageManager
-4. 修改 SettingsManager 添加 Language 字段
-5. 逐文件替换 XAML 中的英文文本
-6. 逐文件替换 C# 代码中的英文字符串
-7. 汉化 HotKeyAction 枚举描述
-8. 汉化安装脚本
-9. 创建中文文档（README.zh-CN.md、用户指南等）
-10. 构建测试
-11. 功能回归测试
+### ✅ 已完成
+
+| 步骤 | 状态 | 说明 |
+|------|------|------|
+| 创建分支 | ✅ | `feature/zh-cn-localization` |
+| 新增 .resx 资源文件 | ✅ | `Strings/Strings.resx` + `Strings/Strings.zh-CN.resx` |
+| 新增 LanguageManager | ✅ | `Strings/LanguageManager.cs` |
+| 修改 SettingsManager | ✅ | 添加 `Language` 字段 |
+| 更新 MainWindow.xaml | ✅ | 所有文本使用 x:Static 绑定 |
+| 更新 SystemTrayIcon.xaml | ✅ | 所有菜单文本使用 x:Static 绑定 |
+| 更新 HotKeyProfileControl.xaml | ✅ | 所有 ToolTip 使用 x:Static 绑定 |
+| 更新 TabSearchPopup.xaml | ✅ | ToolTip 使用 x:Static 绑定 |
+| 更新 AboutView.xaml | ✅ | 所有文本使用 x:Static 绑定 |
+| 更新 C# 代码文件 | ✅ | 5 个文件的用户可见文本 |
+| 创建中文文档 | ✅ | README.zh-CN.md + 用户指南 |
+
+### ⏳ 待完成（需要 .NET 9 SDK + MSBuild）
+
+| 步骤 | 状态 | 说明 |
+|------|------|------|
+| 构建测试 | ⏳ | 需要 .NET 9 SDK 和 .NET Framework MSBuild |
+| HotKeyAction 枚举汉化 | ⏳ | Description 属性需运行时读取资源 |
+| 安装脚本汉化 | ⏳ | installer.iss 需要 Inno Setup 编译 |
+| 功能回归测试 | ⏳ | 需要在 Windows 11 上运行测试 |
+
+### 下一步操作
+
+1. 安装 .NET 9 SDK：https://dotnet.microsoft.com/download
+2. 使用 Visual Studio 2022 打开解决方案
+3. 构建项目（Release 配置）
+4. 运行测试基本功能
+5. 如需汉化 HotKeyAction 枚举，修改 `Models/HotKeyAction.cs` 中的 Description 属性

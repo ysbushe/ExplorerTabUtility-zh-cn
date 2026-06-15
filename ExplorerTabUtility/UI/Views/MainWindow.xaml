@@ -226,6 +226,31 @@
                                                       ToolTip="{x:Static strings:Strings.TipHideTrayIcon}" />
                                         </StackPanel>
                                     </GroupBox>
+
+                                    <GroupBox Header="{x:Static strings:Strings.GrpLanguage}"
+                                              Style="{StaticResource CustomGroupBoxStyle}"
+                                              Margin="0,8,0,0">
+                                        <StackPanel Margin="8">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                <TextBlock Text="{x:Static strings:Strings.LblLanguage}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,8,0"
+                                                           MinWidth="100" />
+                                                <ComboBox x:Name="CbLanguage"
+                                                          Style="{StaticResource CustomComboBoxStyle}"
+                                                          Width="150"
+                                                          ToolTip="{x:Static strings:Strings.TipLanguage}">
+                                                    <ComboBoxItem Content="Auto" Tag="Auto" />
+                                                    <ComboBoxItem Content="English" Tag="en-US" />
+                                                    <ComboBoxItem Content="简体中文" Tag="zh-CN" />
+                                                </ComboBox>
+                                            </StackPanel>
+                                            <TextBlock Text="{x:Static strings:Strings.TipLanguageRestart}"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                                       FontSize="11"
+                                                       Margin="0,4,0,0" />
+                                        </StackPanel>
+                                    </GroupBox>
                                 </StackPanel>
                             </TabItem>
 

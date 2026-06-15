@@ -42,6 +42,7 @@ public partial class MainWindow : Window
         CbAutoSaveProfiles.IsChecked = SettingsManager.SaveProfilesOnExit;
         CbSaveClosedHistory.IsChecked = SettingsManager.SaveClosedHistory;
         CbRestorePreviousWindows.IsChecked = SettingsManager.RestorePreviousWindows;
+        InitializeLanguageComboBox();
         UpdateTrayIconVisibility(false);
 
         if (SettingsManager.AutoUpdate)
@@ -76,6 +77,7 @@ public partial class MainWindow : Window
         CbThemeIssue.Unchecked += CbThemeIssue_CheckedChanged;
         CbHideTrayIcon.Checked += CbHideTrayIcon_CheckedChanged;
         CbHideTrayIcon.Unchecked += CbHideTrayIcon_CheckedChanged;
+        CbLanguage.SelectionChanged += CbLanguage_SelectionChanged;
 
         // Window events
         SizeChanged += MainWindow_SizeChanged;
@@ -87,6 +89,32 @@ public partial class MainWindow : Window
         MinimizeButton.Click += MinimizeButton_Click;
         MaximizeButton.Click += MaximizeButton_Click;
         CloseButton.Click += CloseButton_Click;
+    }
+
+    private void InitializeLanguageComboBox()
+    {
+        var currentLang = SettingsManager.Language;
+        foreach (System.Windows.Controls.ComboBoxItem item in CbLanguage.Items)
+        {
+            if (item.Tag?.ToString() == currentLang)
+            {
+                CbLanguage.SelectedItem = item;
+                break;
+            }
+        }
+    }
+
+    private void CbLanguage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (CbLanguage.SelectedItem is not System.Windows.Controls.ComboBoxItem selected)
+            return;
+
+        var newLang = selected.Tag?.ToString() ?? "Auto";
+        if (newLang == SettingsManager.Language)
+            return;
+
+        SettingsManager.Language = newLang;
+        CustomMessageBox.Show(Strings.TipLanguageRestart, Strings.AppTitle);
     }
 
     private void StartHooks()

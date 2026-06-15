@@ -160,6 +160,12 @@ namespace ExplorerTabUtility.Strings {
         // Constants
         internal static string NotifyIconText => ResourceManager.GetString("NotifyIconText", resourceCulture);
 
+        // Language Settings
+        internal static string GrpLanguage => ResourceManager.GetString("GrpLanguage", resourceCulture);
+        internal static string LblLanguage => ResourceManager.GetString("LblLanguage", resourceCulture);
+        internal static string TipLanguage => ResourceManager.GetString("TipLanguage", resourceCulture);
+        internal static string TipLanguageRestart => ResourceManager.GetString("TipLanguageRestart", resourceCulture);
+
         // HotKeyAction Descriptions
         internal static string Action_Open => ResourceManager.GetString("Action_Open", resourceCulture);
         internal static string Action_Duplicate => ResourceManager.GetString("Action_Duplicate", resourceCulture);

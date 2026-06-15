@@ -313,6 +313,20 @@ Check in System Tray Icons.</value>
     <value>Explorer Tab Utility: Force new windows to tabs.</value>
   </data>
 
+  <!-- Language Settings -->
+  <data name="GrpLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LblLanguage" xml:space="preserve">
+    <value>Interface Language</value>
+  </data>
+  <data name="TipLanguage" xml:space="preserve">
+    <value>Select the interface language. Changes take effect after restart.</value>
+  </data>
+  <data name="TipLanguageRestart" xml:space="preserve">
+    <value>* Language changes will take effect after restarting the application.</value>
+  </data>
+
   <!-- HotKeyAction Descriptions -->
   <data name="Action_Open" xml:space="preserve">
     <value>Open a new tab/window with the specified location.</value>
