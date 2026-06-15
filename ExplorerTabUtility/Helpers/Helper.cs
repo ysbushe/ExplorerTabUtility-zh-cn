@@ -268,16 +268,80 @@ public static class Helper
         var hr = WinApi.AccessibleObjectFromPoint(point, out var accObj, out var childId);
         try
         {
-            if (hr != 0 || childId is not 0) return false;
+            if (hr != 0 || accObj == null || !IsSelfChildId(childId))
+                return false;
 
-            var role = accObj.get_accRole(0);
-            return role is 0x21; //IAccessible.Role:list (ROLE_SYSTEM_LIST 0x21)
+            var role = GetAccessibleRole(accObj);
+            if (IsItemRole(role))
+                return false;
+
+            if (role == 0x21) // ROLE_SYSTEM_LIST
+                return true;
+
+            // Windows 11 26H1 can expose empty parts of the items view as an
+            // unnamed grouping instead of ROLE_SYSTEM_LIST.
+            return role == 0x14 && // ROLE_SYSTEM_GROUPING
+                   string.IsNullOrWhiteSpace(GetAccessibleName(accObj)) &&
+                   IsPointInsideExplorerItemsView(point);
         }
         finally
         {
             if (accObj != null && Marshal.IsComObject(accObj))
                 Marshal.ReleaseComObject(accObj);
         }
+    }
+
+    private static bool IsSelfChildId(object childId)
+    {
+        try
+        {
+            return Convert.ToInt32(childId) == 0;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static int GetAccessibleRole(IAccessible accessible)
+    {
+        try
+        {
+            return Convert.ToInt32(accessible.get_accRole(0));
+        }
+        catch
+        {
+            return -1;
+        }
+    }
+
+    private static bool IsItemRole(int role) =>
+        role is 0x22 or 0x24; // ROLE_SYSTEM_LISTITEM / ROLE_SYSTEM_OUTLINEITEM
+
+    private static string GetAccessibleName(IAccessible accessible)
+    {
+        try
+        {
+            return accessible.get_accName(0) ?? string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    private static bool IsPointInsideExplorerItemsView(Point point)
+    {
+        var window = WinApi.WindowFromPoint(point);
+        for (var depth = 0; window != 0 && depth < 12; depth++)
+        {
+            if (WinApi.IsWindowHasClassName(window, "DirectUIHWND"))
+                return true;
+
+            window = WinApi.GetParent(window);
+        }
+
+        return false;
     }
     public static bool IsFileExplorerTab(nint tab)
     {

@@ -164,7 +164,11 @@ public partial class MainWindow : Window
     private void StartHooks()
     {
         if (SettingsManager.IsWindowHookActive) _hookManager.StartWindowHook();
-        if (SettingsManager.IsMouseHookActive) _hookManager.StartMouseHook();
+        if (SettingsManager.DoubleClickEmptySpace || SettingsManager.IsMouseHookActive)
+        {
+            SettingsManager.IsMouseHookActive = true;
+            _hookManager.StartMouseHook();
+        }
         if (SettingsManager.IsKeyboardHookActive) _hookManager.StartKeyboardHook();
         _hookManager.SetReuseTabs(SettingsManager.ReuseTabs);
     }

@@ -109,6 +109,7 @@ public partial class SystemTrayIcon : UserControl, IDisposable
 
     public void UpdateMenuItems(bool autoCheckParent = true)
     {
+        MouseHookMenu.IsChecked = SettingsManager.IsMouseHookActive;
         PopulateHookProfiles(KeyboardHookMenu, _profileManager.GetKeyboardProfiles(), autoCheckParent);
         PopulateHookProfiles(MouseHookMenu, _profileManager.GetMouseProfiles(), autoCheckParent);
     }
