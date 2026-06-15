@@ -23,6 +23,7 @@ env:
   PROJECT_NAME: ExplorerTabUtility
   BRANCH_NAME: feature/zh-cn-localization
   UPSTREAM_REPOSITORY: w4po/ExplorerTabUtility
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   sync-build-release:
@@ -99,9 +100,23 @@ jobs:
 
           $localizedVersion = "$baseVersion.$revision"
           $projectPath = "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj"
-          [xml]$project = Get-Content $projectPath -Raw
-          $project.Project.PropertyGroup.Version = $localizedVersion
-          $project.Save((Resolve-Path $projectPath))
+          $projectContent = Get-Content $projectPath -Raw
+          $versionRegex = [regex]::new("<Version>[^<]+</Version>")
+          if ($versionRegex.Matches($projectContent).Count -ne 1) {
+            throw "Expected exactly one Version element in $projectPath."
+          }
+          $updatedProjectContent = $versionRegex.Replace(
+            $projectContent,
+            "<Version>$localizedVersion</Version>",
+            1
+          )
+          if ($updatedProjectContent -ne $projectContent) {
+            [System.IO.File]::WriteAllText(
+              (Resolve-Path $projectPath),
+              $updatedProjectContent,
+              [System.Text.UTF8Encoding]::new($false)
+            )
+          }
 
           git add ".github/upstream-version.txt" $projectPath
           if (-not (git diff --cached --quiet)) {
