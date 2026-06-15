@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.Win32;
 using ExplorerTabUtility.Helpers;
 
@@ -13,11 +13,11 @@ public static class RegistryManager
     private const string StartupApprovedKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run";
     private const string ExplorerAdvancedKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
     private static readonly string? ExecutablePath = Helper.GetExecutablePath();
-    private static readonly string StartupShortcutPath = Path.Combine(
+    private static readonly string PortableStartupScriptPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.Startup),
-        $"{Constants.AppName}.lnk");
+        $"{Constants.AppName}.vbs");
     public static bool IsStartupEnabled =>
-        IsStartupShortcutCorrect() || (IsInStartup() && IsStartupApprovedEnabled());
+        IsPortableStartupScriptCorrect() || (IsInStartup() && IsStartupApprovedEnabled());
 
     public static void ToggleStartup()
     {
@@ -29,7 +29,7 @@ public static class RegistryManager
         else
         {
             if (IsPortableMode())
-                CreateStartupShortcut();
+                CreatePortableStartupScript();
             else
                 AddToStartup();
             CreatePortableAutoStartMarker();
@@ -42,8 +42,8 @@ public static class RegistryManager
             AppContext.BaseDirectory,
             Constants.PortableAutoStartFileName);
 
-        if (File.Exists(portableAutoStartPath) && !IsStartupShortcutCorrect())
-            CreateStartupShortcut();
+        if (File.Exists(portableAutoStartPath) && !IsPortableStartupScriptCorrect())
+            CreatePortableStartupScript();
     }
 
     private static bool IsInStartup()
@@ -104,73 +104,51 @@ public static class RegistryManager
             Debug.WriteLine($"Failed to remove startup registry entry: {ex.Message}");
         }
 
-        if (File.Exists(StartupShortcutPath))
-            File.Delete(StartupShortcutPath);
+        if (File.Exists(PortableStartupScriptPath))
+            File.Delete(PortableStartupScriptPath);
     }
 
-    private static bool IsStartupShortcutCorrect()
+    private static bool IsPortableStartupScriptCorrect()
     {
         if (string.IsNullOrWhiteSpace(ExecutablePath) ||
-            !File.Exists(StartupShortcutPath))
+            !File.Exists(PortableStartupScriptPath))
         {
             return false;
         }
 
-        dynamic? shell = null;
-        dynamic? shortcut = null;
         try
         {
-            var shellType = Type.GetTypeFromProgID("WScript.Shell");
-            if (shellType == null) return false;
-
-            shell = Activator.CreateInstance(shellType);
-            shortcut = shell?.CreateShortcut(StartupShortcutPath);
-            return string.Equals(
-                shortcut?.TargetPath as string,
-                ExecutablePath,
+            var script = File.ReadAllText(PortableStartupScriptPath);
+            return script.Contains(
+                EscapeVbScriptString(ExecutablePath),
                 StringComparison.OrdinalIgnoreCase);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Failed to inspect startup shortcut: {ex.Message}");
+            Debug.WriteLine($"Failed to inspect portable startup script: {ex.Message}");
             return false;
-        }
-        finally
-        {
-            ReleaseComObject(shortcut);
-            ReleaseComObject(shell);
         }
     }
 
-    private static void CreateStartupShortcut()
+    private static void CreatePortableStartupScript()
     {
         if (string.IsNullOrWhiteSpace(ExecutablePath)) return;
 
-        dynamic? shell = null;
-        dynamic? shortcut = null;
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(StartupShortcutPath)!);
-            var shellType = Type.GetTypeFromProgID("WScript.Shell");
-            if (shellType == null) return;
-
-            shell = Activator.CreateInstance(shellType);
-            shortcut = shell?.CreateShortcut(StartupShortcutPath);
-            if (shortcut == null) return;
-
-            shortcut.TargetPath = ExecutablePath;
-            shortcut.WorkingDirectory = AppContext.BaseDirectory;
-            shortcut.Description = "ExplorerTabUtility portable startup";
-            shortcut.Save();
+            Directory.CreateDirectory(Path.GetDirectoryName(PortableStartupScriptPath)!);
+            var escapedPath = EscapeVbScriptString(ExecutablePath);
+            var script =
+                "Set shell = CreateObject(\"WScript.Shell\")\r\n" +
+                $"shell.Run Chr(34) & \"{escapedPath}\" & Chr(34), 0, False\r\n";
+            File.WriteAllText(
+                PortableStartupScriptPath,
+                script,
+                Encoding.Unicode);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Failed to create startup shortcut: {ex.Message}");
-        }
-        finally
-        {
-            ReleaseComObject(shortcut);
-            ReleaseComObject(shell);
+            Debug.WriteLine($"Failed to create portable startup script: {ex.Message}");
         }
     }
 
@@ -195,11 +173,8 @@ public static class RegistryManager
     private static bool IsPortableMode() =>
         File.Exists(Path.Combine(AppContext.BaseDirectory, Constants.PortableModeFileName));
 
-    private static void ReleaseComObject(object? value)
-    {
-        if (value != null && Marshal.IsComObject(value))
-            Marshal.FinalReleaseComObject(value);
-    }
+    private static string EscapeVbScriptString(string value) =>
+        value.Replace("\"", "\"\"");
 
     public static int GetDefaultExplorerLaunchId()
     {
