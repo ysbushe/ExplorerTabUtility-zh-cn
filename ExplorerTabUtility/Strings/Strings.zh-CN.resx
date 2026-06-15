@@ -327,6 +327,25 @@
     <value>* 语言设置将在重启程序后生效。</value>
   </data>
 
+  <!-- Built-in Double-Click Empty Space -->
+  <data name="GrpMouseFeatures" xml:space="preserve">
+    <value>鼠标功能</value>
+  </data>
+  <data name="CbDoubleClickEmptySpace" xml:space="preserve">
+    <value>启用资源管理器空白处双击向上一级</value>
+  </data>
+  <data name="TipDoubleClickEmptySpace" xml:space="preserve">
+    <value>启用后，在资源管理器文件列表空白处双击鼠标左键可返回上一级目录。</value>
+  </data>
+
+  <!-- Scope -->
+  <data name="ScopeGlobal" xml:space="preserve">
+    <value>全局</value>
+  </data>
+  <data name="ScopeFileExplorer" xml:space="preserve">
+    <value>资源管理器内</value>
+  </data>
+
   <!-- HotKeyAction Descriptions -->
   <data name="Action_Open" xml:space="preserve">
     <value>打开指定位置的新标签页/窗口。</value>

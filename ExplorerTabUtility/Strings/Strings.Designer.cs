@@ -182,5 +182,14 @@ namespace ExplorerTabUtility.Strings {
         public static string Action_SnapLeft => ResourceManager.GetString("Action_SnapLeft", resourceCulture);
         public static string Action_SnapUp => ResourceManager.GetString("Action_SnapUp", resourceCulture);
         public static string Action_SnapDown => ResourceManager.GetString("Action_SnapDown", resourceCulture);
+
+        // Scope
+        public static string ScopeGlobal => ResourceManager.GetString("ScopeGlobal", resourceCulture);
+        public static string ScopeFileExplorer => ResourceManager.GetString("ScopeFileExplorer", resourceCulture);
+
+        // Built-in Double-Click Empty Space
+        public static string GrpMouseFeatures => ResourceManager.GetString("GrpMouseFeatures", resourceCulture);
+        public static string CbDoubleClickEmptySpace => ResourceManager.GetString("CbDoubleClickEmptySpace", resourceCulture);
+        public static string TipDoubleClickEmptySpace => ResourceManager.GetString("TipDoubleClickEmptySpace", resourceCulture);
     }
 }

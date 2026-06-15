@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using System.Windows;
-using System.Windows.Data;
 using System.Globalization;
 using System.ComponentModel;
 using System.Resources;
@@ -16,18 +14,29 @@ public class EnumDescriptionConverter : IValueConverter
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value == null) return DependencyProperty.UnsetValue;
+        if (value == null) return string.Empty;
 
         var valueStr = value.ToString()!;
+        var enumType = value.GetType();
 
-        // Try to get localized description from resources first
-        var resourceKey = $"Action_{valueStr}";
-        var localized = ResourceMgr.GetString(resourceKey, culture);
-        if (!string.IsNullOrEmpty(localized))
-            return localized;
+        // Determine the resource key prefix based on the enum type
+        var prefix = enumType.Name switch
+        {
+            "HotKeyAction" => "Action_",
+            "HotkeyScope" => "Scope_",
+            _ => null
+        };
+
+        if (prefix != null)
+        {
+            var resourceKey = $"{prefix}{valueStr}";
+            var localized = ResourceMgr.GetString(resourceKey, CultureInfo.CurrentUICulture);
+            if (!string.IsNullOrEmpty(localized))
+                return localized;
+        }
 
         // Fall back to DescriptionAttribute
-        var fieldInfo = value.GetType().GetField(valueStr);
+        var fieldInfo = enumType.GetField(valueStr);
         if (fieldInfo == null) return valueStr;
 
         var descriptionAttribute = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
