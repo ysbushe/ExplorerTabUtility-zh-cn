@@ -181,8 +181,8 @@ public partial class TabSearchPopup : Window
     {
         _isShowingDialog = true;
         var result = CustomMessageBox.Show(
-            Strings.ConfirmClearHistory,
-            Strings.ConfirmClearHistoryTitle,
+            Res.ConfirmClearHistory,
+            Res.ConfirmClearHistoryTitle,
             MessageBoxButton.YesNo,
             MessageBoxImage.Question,
             MessageBoxResult.No);

@@ -28,7 +28,7 @@ public partial class App : Application
             return;
         }
 
-        CustomMessageBox.Show(Strings.MsgAnotherInstance, Strings.AppTitle, icon: MessageBoxImage.Information);
+        CustomMessageBox.Show(Res.MsgAnotherInstance, Res.AppTitle, icon: MessageBoxImage.Information);
         Shutdown();
     }
 

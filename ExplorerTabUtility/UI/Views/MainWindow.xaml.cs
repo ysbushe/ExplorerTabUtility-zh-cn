@@ -114,7 +114,7 @@ public partial class MainWindow : Window
             return;
 
         SettingsManager.Language = newLang;
-        CustomMessageBox.Show(Strings.TipLanguageRestart, Strings.AppTitle);
+        CustomMessageBox.Show(Res.TipLanguageRestart, Res.AppTitle);
     }
 
     private void StartHooks()
@@ -230,10 +230,10 @@ public partial class MainWindow : Window
         if (isChecked && showAlert && !SettingsManager.IsTrayIconHidden)
         {
             var message = canToggleVisibility
-                ? string.Format(Strings.MsgToggleVisibility, profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick))
-                : Strings.MsgNoToggleVisibility;
+                ? string.Format(Res.MsgToggleVisibility, profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick))
+                : Res.MsgNoToggleVisibility;
 
-            CustomMessageBox.Show(this, message, Strings.AppTitle);
+            CustomMessageBox.Show(this, message, Res.AppTitle);
         }
 
         var newCheckedState = canToggleVisibility && isChecked;

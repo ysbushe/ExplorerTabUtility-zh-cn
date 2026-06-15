@@ -380,7 +380,7 @@
                         </Border>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="{x:Static strings:Strings.AppTitle}"
+                            <TextBlock Text="{x:Static strings:Res.AppTitle}"
                                        Style="{StaticResource AppTitleStyle}"
                                        MouseLeftButtonUp="OpenProjectPage">
                                 <TextBlock.Effect>
@@ -406,7 +406,7 @@
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
 
-                        <TextBlock Text="{x:Static strings:Strings.AboutSubtitle}"
+                        <TextBlock Text="{x:Static strings:Res.AboutSubtitle}"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,4" />
@@ -451,7 +451,7 @@
                                         <ScaleTransform ScaleX="1" ScaleY="1" />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                                <TextBlock Text="{x:Static strings:Strings.AboutStarGitHub}"
+                                <TextBlock Text="{x:Static strings:Res.AboutStarGitHub}"
                                            FontWeight="SemiBold"
                                            VerticalAlignment="Center" />
                             </StackPanel>
@@ -469,10 +469,10 @@
 
                     <!-- Left Column: Support Options -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="{x:Static strings:Strings.AboutSupportProject}"
+                        <TextBlock Text="{x:Static strings:Res.AboutSupportProject}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="{x:Static strings:Strings.AboutSupportDesc}"
+                        <TextBlock Text="{x:Static strings:Res.AboutSupportDesc}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -533,7 +533,7 @@
                         <Border Margin="0,24,0,0" CornerRadius="8"
                                 Style="{StaticResource ProfileCardStyle}">
                             <StackPanel>
-                                <TextBlock Text="{x:Static strings:Strings.AboutDeveloper}"
+                                <TextBlock Text="{x:Static strings:Res.AboutDeveloper}"
                                            FontWeight="SemiBold"
                                            FontSize="18"
                                            Foreground="{StaticResource TextPrimaryBrush}"
@@ -592,10 +592,10 @@
 
                     <!-- Right Column: Supporters -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="{x:Static strings:Strings.AboutCurrentSupporters}"
+                        <TextBlock Text="{x:Static strings:Res.AboutCurrentSupporters}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="{x:Static strings:Strings.AboutSupportersDesc}"
+                        <TextBlock Text="{x:Static strings:Res.AboutSupportersDesc}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -632,13 +632,13 @@
                                                                                               Opacity="0.5" />
                                                                         </TextBlock.Effect>
                                                                     </TextBlock>
-                                                                    <TextBlock Text="{x:Static strings:Strings.AboutBeFirst}"
+                                                                    <TextBlock Text="{x:Static strings:Res.AboutBeFirst}"
                                                                                TextWrapping="Wrap"
                                                                                FontSize="16"
                                                                                FontWeight="Medium"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"
                                                                                HorizontalAlignment="Center" />
-                                                                    <TextBlock Text="{x:Static strings:Strings.AboutKeepAlive}"
+                                                                    <TextBlock Text="{x:Static strings:Res.AboutKeepAlive}"
                                                                                TextWrapping="Wrap"
                                                                                Margin="0,8,0,0"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"

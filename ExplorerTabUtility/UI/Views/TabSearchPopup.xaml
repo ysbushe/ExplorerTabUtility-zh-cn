@@ -139,7 +139,7 @@
                 </Border>
 
                 <!-- Clear Button -->
-                <Button Grid.Column="1" ToolTip="{x:Static strings:Strings.TipClearHistory}"
+                <Button Grid.Column="1" ToolTip="{x:Static strings:Res.TipClearHistory}"
                         Margin="5,0,0,0"
                         Focusable="False"
                         Width="40" Height="Auto"

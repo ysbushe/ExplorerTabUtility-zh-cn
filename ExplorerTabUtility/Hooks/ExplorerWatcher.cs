@@ -524,8 +524,8 @@ public class ExplorerWatcher : IHook
     private async Task RestorePreviousWindows()
     {
         var result = await RunInStaThread(() => CustomMessageBox.Show(
-            Strings.MsgRestoreWindows,
-            Strings.AppTitle,
+            Res.MsgRestoreWindows,
+            Res.AppTitle,
             MessageBoxButton.YesNo,
             MessageBoxImage.Question));
 

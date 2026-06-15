@@ -37,30 +37,30 @@
 
                 <!-- Enabled Toggle -->
                 <ToggleButton x:Name="CbEnabled" Grid.Column="0" Style="{StaticResource ToggleButtonStyle}"
-                              VerticalAlignment="Stretch" ToolTip="{x:Static strings:Strings.TipEnableProfile}" />
+                              VerticalAlignment="Stretch" ToolTip="{x:Static strings:Res.TipEnableProfile}" />
 
                 <!-- Name -->
                 <TextBox x:Name="TxtName" Grid.Column="1" Tag="Name" Style="{StaticResource CustomTextBoxStyle}"
-                         ToolTip="{x:Static strings:Strings.TipProfileName}" />
+                         ToolTip="{x:Static strings:Res.TipProfileName}" />
 
                 <!-- Hotkeys -->
                 <TextBox x:Name="TxtHotKeys" Grid.Column="3" Tag="Hotkeys" Style="{StaticResource CustomTextBoxStyle}"
-                         ToolTip="{x:Static strings:Strings.TipProfileHotkeys}" />
+                         ToolTip="{x:Static strings:Res.TipProfileHotkeys}" />
 
                 <!-- Scope -->
                 <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}"
-                          ToolTip="{x:Static strings:Strings.TipProfileScope}" />
+                          ToolTip="{x:Static strings:Res.TipProfileScope}" />
 
                 <!-- Action -->
                 <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150"
-                          ToolTip="{x:Static strings:Strings.TipProfileAction}" />
+                          ToolTip="{x:Static strings:Res.TipProfileAction}" />
 
                 <!-- Expander button -->
                 <ToggleButton x:Name="ExpanderToggle" Grid.Column="7" Margin="4, 0" Style="{StaticResource ToggleButtonArrowStyle}"
-                              ToolTip="{x:Static strings:Strings.TipShowMore}" />
+                              ToolTip="{x:Static strings:Res.TipShowMore}" />
 
                 <!-- Delete Button -->
-                <Button x:Name="BtnDelete" Grid.Column="8" ToolTip="{x:Static strings:Strings.TipDeleteProfile}">
+                <Button x:Name="BtnDelete" Grid.Column="8" ToolTip="{x:Static strings:Res.TipDeleteProfile}">
                     <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
                           Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Uniform" Width="16"
                           Height="16" />
@@ -90,12 +90,12 @@
                 <!-- Path -->
                 <TextBox Grid.Column="0" x:Name="TxtPath" Tag="Location" Style="{StaticResource CustomTextBoxStyle}"
                          ContextMenu="{StaticResource TextBoxCustomContextMenu}"
-                         ToolTip="{x:Static strings:Strings.TipProfilePath}" />
+                         ToolTip="{x:Static strings:Res.TipProfilePath}" />
 
                 <!-- Delay -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="6"
-                            ToolTip="{x:Static strings:Strings.TipProfileDelay}">
-                    <TextBlock Text="{x:Static strings:Strings.ProfileDelay}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            ToolTip="{x:Static strings:Res.TipProfileDelay}">
+                    <TextBlock Text="{x:Static strings:Res.ProfileDelay}" VerticalAlignment="Center" Margin="0,0,6,0" />
 
                     <controls:NumericInputControl x:Name="NDelay"
                                                   Margin="0"
@@ -108,12 +108,12 @@
                 </StackPanel>
 
                 <!-- Handled -->
-                <ToggleButton Grid.Column="2" x:Name="CbHandled" Content="{x:Static strings:Strings.ProfileHandled}" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
-                              ToolTip="{x:Static strings:Strings.TipProfileHandled}" />
+                <ToggleButton Grid.Column="2" x:Name="CbHandled" Content="{x:Static strings:Res.ProfileHandled}" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
+                              ToolTip="{x:Static strings:Res.TipProfileHandled}" />
 
                 <!-- Open as Tab -->
-                <ToggleButton Grid.Column="3" x:Name="CbOpenAsTab" Content="{x:Static strings:Strings.ProfileTab}" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
-                              ToolTip="{x:Static strings:Strings.TipProfileAsTab}" />
+                <ToggleButton Grid.Column="3" x:Name="CbOpenAsTab" Content="{x:Static strings:Res.ProfileTab}" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
+                              ToolTip="{x:Static strings:Res.TipProfileAsTab}" />
             </Grid>
         </Grid>
     </Border>
