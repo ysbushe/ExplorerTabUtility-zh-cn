@@ -58,7 +58,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Strings\Strings.Designer.cs">
+        <Compile Include="Strings\Strings.Designer.cs">
             <AutoGen>True</AutoGen>
             <DesignTime>True</DesignTime>
             <DependentUpon>Strings.resx</DependentUpon>
