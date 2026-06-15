@@ -16,9 +16,15 @@ public static class RegistryManager
     public static void ToggleStartup()
     {
         if (IsStartupEnabled)
+        {
             RemoveFromStartup();
+            DeletePortableAutoStartMarker();
+        }
         else
+        {
             AddToStartup();
+            CreatePortableAutoStartMarker();
+        }
     }
 
     public static void EnsurePortableStartup()
@@ -27,8 +33,25 @@ public static class RegistryManager
             AppContext.BaseDirectory,
             Constants.PortableAutoStartFileName);
 
-        if (File.Exists(portableAutoStartPath) && !IsInStartup())
-            AddToStartup();
+        if (!File.Exists(portableAutoStartPath) ||
+            string.IsNullOrWhiteSpace(ExecutablePath))
+        {
+            return;
+        }
+
+        using var runKey = Registry.CurrentUser.CreateSubKey(RunKeyPath, true);
+        var currentPath = runKey.GetValue(Constants.AppName) as string;
+        if (!string.Equals(currentPath, ExecutablePath, StringComparison.OrdinalIgnoreCase))
+            runKey.SetValue(Constants.AppName, ExecutablePath);
+
+        using var approvedKey = Registry.CurrentUser.CreateSubKey(StartupApprovedKeyPath, true);
+        var approvedValue = approvedKey.GetValue(Constants.AppName) as byte[];
+        if (approvedValue == null || approvedValue.Length == 0 || approvedValue[0] % 2 != 0)
+        {
+            var enabledData = new byte[12];
+            enabledData[0] = 0x02;
+            approvedKey.SetValue(Constants.AppName, enabledData, RegistryValueKind.Binary);
+        }
     }
 
     private static bool IsInStartup()
@@ -74,6 +97,27 @@ public static class RegistryManager
         // Remove from StartupApproved
         using var approvedKey = OpenCurrentUserKey(StartupApprovedKeyPath, true);
         approvedKey?.DeleteValue(Constants.AppName, false);
+    }
+
+    private static void CreatePortableAutoStartMarker()
+    {
+        var portableModePath = Path.Combine(
+            AppContext.BaseDirectory,
+            Constants.PortableModeFileName);
+        if (!File.Exists(portableModePath)) return;
+
+        File.WriteAllText(
+            Path.Combine(AppContext.BaseDirectory, Constants.PortableAutoStartFileName),
+            "Restore the current executable path at next launch.");
+    }
+
+    private static void DeletePortableAutoStartMarker()
+    {
+        var markerPath = Path.Combine(
+            AppContext.BaseDirectory,
+            Constants.PortableAutoStartFileName);
+        if (File.Exists(markerPath))
+            File.Delete(markerPath);
     }
 
     public static int GetDefaultExplorerLaunchId()
