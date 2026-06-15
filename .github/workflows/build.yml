@@ -1,0 +1,125 @@
+name: Build zh-CN Localization
+
+on:
+  push:
+    branches:
+      - feature/zh-cn-localization
+  workflow_dispatch:
+
+env:
+  PROJECT_NAME: ExplorerTabUtility
+  CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: feature/zh-cn-localization
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+        with:
+          vs-version: '17.0'
+
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore NuGet packages
+        run: |
+          dotnet restore "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" -f net9.0-windows
+        shell: pwsh
+
+      - name: Build net9.0-windows
+        run: |
+          msbuild "${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj" `
+            /p:Configuration=${{ env.CONFIGURATION }} `
+            /p:TargetFramework=net9.0-windows `
+            /p:Platform="Any CPU" `
+            /restore
+        shell: pwsh
+
+      - name: List build output
+        run: |
+          $outputDir = "${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/net9.0-windows"
+          if (Test-Path $outputDir) {
+            Write-Host "Build output directory exists:"
+            Get-ChildItem -Path $outputDir -Recurse | Select-Object FullName
+          } else {
+            Write-Host "Build output directory not found at: $outputDir"
+            Write-Host "Searching for build output..."
+            Get-ChildItem -Path "${{ env.PROJECT_NAME }}/bin" -Recurse -Filter "*.exe" | Select-Object FullName
+          }
+        shell: pwsh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExplorerTabUtility-zh-CN-net9-windows
+          path: ${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/net9.0-windows/
+          retention-days: 30
+
+  build-report:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Generate build report
+        run: |
+          cat > build-report-zh-CN.md << 'EOF'
+          # ExplorerTabUtility zh-CN 构建报告
+
+          > 构建时间：$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          > 分支：feature/zh-cn-localization
+          > 工作流：build.yml
+
+          ## 构建状态
+
+          | 项目 | 状态 |
+          |------|------|
+          | 构建结果 | ${{ needs.build.result }} |
+          | 构建目标 | net9.0-windows |
+          | 配置 | Release |
+          | Runner | windows-latest |
+
+          ## Artifact
+
+          - 名称：ExplorerTabUtility-zh-CN-net9-windows
+          - 下载位置：GitHub Actions → Build workflow → Artifacts
+
+          ## 未构建 net481 的原因
+
+          net481 目标需要 .NET Framework 4.8.1 SDK 和完整的 MSBuild 环境。
+          当前 workflow 优先构建 net9.0-windows，net481 可在后续添加。
+
+          ## 本机运行构建产物
+
+          1. 下载 artifact ZIP 文件
+          2. 解压到任意目录
+          3. 确保已安装 .NET 9 Desktop Runtime
+          4. 运行 ExplorerTabUtility.exe
+          5. 设置 Language 为 "zh-CN" 并重启
+
+          ## 语言设置
+
+          在 settings.json 中配置：
+          ```json
+          {
+            "Language": "zh-CN"
+          }
+          ```
+
+          或在程序中通过代码设置（需修改）。
+          EOF
+        shell: bash
+
+      - name: Upload build report
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report-zh-CN
+          path: build-report-zh-CN.md
+          retention-days: 30
