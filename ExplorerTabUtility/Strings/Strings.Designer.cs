@@ -18,13 +18,12 @@ namespace ExplorerTabUtility.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Res {
+    public class Res {
 
         private static global::System.Resources.ResourceManager resourceMan;
 
         private static global::System.Globalization.CultureInfo resourceCulture;
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Res() {
         }
 
@@ -32,7 +31,7 @@ namespace ExplorerTabUtility.Strings {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ExplorerTabUtility.Strings.Strings", typeof(Res).Assembly);
@@ -57,131 +56,131 @@ namespace ExplorerTabUtility.Strings {
         }
 
         // MainWindow
-        internal static string AppTitle => ResourceManager.GetString("AppTitle", resourceCulture);
-        internal static string NavShortcuts => ResourceManager.GetString("NavShortcuts", resourceCulture);
-        internal static string NavPreferences => ResourceManager.GetString("NavPreferences", resourceCulture);
-        internal static string NavAbout => ResourceManager.GetString("NavAbout", resourceCulture);
-        internal static string BtnNew => ResourceManager.GetString("BtnNew", resourceCulture);
-        internal static string BtnImport => ResourceManager.GetString("BtnImport", resourceCulture);
-        internal static string BtnExport => ResourceManager.GetString("BtnExport", resourceCulture);
-        internal static string BtnSave => ResourceManager.GetString("BtnSave", resourceCulture);
-        internal static string CbAutoSave => ResourceManager.GetString("CbAutoSave", resourceCulture);
-        internal static string GrpAppSettings => ResourceManager.GetString("GrpAppSettings", resourceCulture);
-        internal static string CbAutoUpdate => ResourceManager.GetString("CbAutoUpdate", resourceCulture);
-        internal static string CbThemeIssue => ResourceManager.GetString("CbThemeIssue", resourceCulture);
-        internal static string CbSaveClosedHistory => ResourceManager.GetString("CbSaveClosedHistory", resourceCulture);
-        internal static string CbRestorePrevious => ResourceManager.GetString("CbRestorePrevious", resourceCulture);
-        internal static string CbHideTrayIcon => ResourceManager.GetString("CbHideTrayIcon", resourceCulture);
-        internal static string StatusWindowHook => ResourceManager.GetString("StatusWindowHook", resourceCulture);
-        internal static string StatusReuseTabs => ResourceManager.GetString("StatusReuseTabs", resourceCulture);
-        internal static string StatusKeyboardHook => ResourceManager.GetString("StatusKeyboardHook", resourceCulture);
-        internal static string StatusMouseHook => ResourceManager.GetString("StatusMouseHook", resourceCulture);
+        public static string AppTitle => ResourceManager.GetString("AppTitle", resourceCulture);
+        public static string NavShortcuts => ResourceManager.GetString("NavShortcuts", resourceCulture);
+        public static string NavPreferences => ResourceManager.GetString("NavPreferences", resourceCulture);
+        public static string NavAbout => ResourceManager.GetString("NavAbout", resourceCulture);
+        public static string BtnNew => ResourceManager.GetString("BtnNew", resourceCulture);
+        public static string BtnImport => ResourceManager.GetString("BtnImport", resourceCulture);
+        public static string BtnExport => ResourceManager.GetString("BtnExport", resourceCulture);
+        public static string BtnSave => ResourceManager.GetString("BtnSave", resourceCulture);
+        public static string CbAutoSave => ResourceManager.GetString("CbAutoSave", resourceCulture);
+        public static string GrpAppSettings => ResourceManager.GetString("GrpAppSettings", resourceCulture);
+        public static string CbAutoUpdate => ResourceManager.GetString("CbAutoUpdate", resourceCulture);
+        public static string CbThemeIssue => ResourceManager.GetString("CbThemeIssue", resourceCulture);
+        public static string CbSaveClosedHistory => ResourceManager.GetString("CbSaveClosedHistory", resourceCulture);
+        public static string CbRestorePrevious => ResourceManager.GetString("CbRestorePrevious", resourceCulture);
+        public static string CbHideTrayIcon => ResourceManager.GetString("CbHideTrayIcon", resourceCulture);
+        public static string StatusWindowHook => ResourceManager.GetString("StatusWindowHook", resourceCulture);
+        public static string StatusReuseTabs => ResourceManager.GetString("StatusReuseTabs", resourceCulture);
+        public static string StatusKeyboardHook => ResourceManager.GetString("StatusKeyboardHook", resourceCulture);
+        public static string StatusMouseHook => ResourceManager.GetString("StatusMouseHook", resourceCulture);
 
         // ToolTips MainWindow
-        internal static string TipOpenAppMenu => ResourceManager.GetString("TipOpenAppMenu", resourceCulture);
-        internal static string TipConfigureShortcuts => ResourceManager.GetString("TipConfigureShortcuts", resourceCulture);
-        internal static string TipConfigureSettings => ResourceManager.GetString("TipConfigureSettings", resourceCulture);
-        internal static string TipAboutApp => ResourceManager.GetString("TipAboutApp", resourceCulture);
-        internal static string TipCreateProfile => ResourceManager.GetString("TipCreateProfile", resourceCulture);
-        internal static string TipImportProfiles => ResourceManager.GetString("TipImportProfiles", resourceCulture);
-        internal static string TipExportProfiles => ResourceManager.GetString("TipExportProfiles", resourceCulture);
-        internal static string TipSaveProfiles => ResourceManager.GetString("TipSaveProfiles", resourceCulture);
-        internal static string TipAutoSave => ResourceManager.GetString("TipAutoSave", resourceCulture);
-        internal static string TipAutoUpdate => ResourceManager.GetString("TipAutoUpdate", resourceCulture);
-        internal static string TipThemeIssue => ResourceManager.GetString("TipThemeIssue", resourceCulture);
-        internal static string TipSaveClosedHistory => ResourceManager.GetString("TipSaveClosedHistory", resourceCulture);
-        internal static string TipRestorePrevious => ResourceManager.GetString("TipRestorePrevious", resourceCulture);
-        internal static string TipHideTrayIcon => ResourceManager.GetString("TipHideTrayIcon", resourceCulture);
+        public static string TipOpenAppMenu => ResourceManager.GetString("TipOpenAppMenu", resourceCulture);
+        public static string TipConfigureShortcuts => ResourceManager.GetString("TipConfigureShortcuts", resourceCulture);
+        public static string TipConfigureSettings => ResourceManager.GetString("TipConfigureSettings", resourceCulture);
+        public static string TipAboutApp => ResourceManager.GetString("TipAboutApp", resourceCulture);
+        public static string TipCreateProfile => ResourceManager.GetString("TipCreateProfile", resourceCulture);
+        public static string TipImportProfiles => ResourceManager.GetString("TipImportProfiles", resourceCulture);
+        public static string TipExportProfiles => ResourceManager.GetString("TipExportProfiles", resourceCulture);
+        public static string TipSaveProfiles => ResourceManager.GetString("TipSaveProfiles", resourceCulture);
+        public static string TipAutoSave => ResourceManager.GetString("TipAutoSave", resourceCulture);
+        public static string TipAutoUpdate => ResourceManager.GetString("TipAutoUpdate", resourceCulture);
+        public static string TipThemeIssue => ResourceManager.GetString("TipThemeIssue", resourceCulture);
+        public static string TipSaveClosedHistory => ResourceManager.GetString("TipSaveClosedHistory", resourceCulture);
+        public static string TipRestorePrevious => ResourceManager.GetString("TipRestorePrevious", resourceCulture);
+        public static string TipHideTrayIcon => ResourceManager.GetString("TipHideTrayIcon", resourceCulture);
 
         // SystemTrayIcon
-        internal static string MenuKeyboardHook => ResourceManager.GetString("MenuKeyboardHook", resourceCulture);
-        internal static string MenuMouseHook => ResourceManager.GetString("MenuMouseHook", resourceCulture);
-        internal static string MenuWindowHook => ResourceManager.GetString("MenuWindowHook", resourceCulture);
-        internal static string MenuReuseTabs => ResourceManager.GetString("MenuReuseTabs", resourceCulture);
-        internal static string MenuAddToStartup => ResourceManager.GetString("MenuAddToStartup", resourceCulture);
-        internal static string MenuCheckUpdates => ResourceManager.GetString("MenuCheckUpdates", resourceCulture);
-        internal static string MenuSettings => ResourceManager.GetString("MenuSettings", resourceCulture);
-        internal static string MenuExit => ResourceManager.GetString("MenuExit", resourceCulture);
+        public static string MenuKeyboardHook => ResourceManager.GetString("MenuKeyboardHook", resourceCulture);
+        public static string MenuMouseHook => ResourceManager.GetString("MenuMouseHook", resourceCulture);
+        public static string MenuWindowHook => ResourceManager.GetString("MenuWindowHook", resourceCulture);
+        public static string MenuReuseTabs => ResourceManager.GetString("MenuReuseTabs", resourceCulture);
+        public static string MenuAddToStartup => ResourceManager.GetString("MenuAddToStartup", resourceCulture);
+        public static string MenuCheckUpdates => ResourceManager.GetString("MenuCheckUpdates", resourceCulture);
+        public static string MenuSettings => ResourceManager.GetString("MenuSettings", resourceCulture);
+        public static string MenuExit => ResourceManager.GetString("MenuExit", resourceCulture);
 
         // ToolTips SystemTrayIcon
-        internal static string TipEnableKeyboard => ResourceManager.GetString("TipEnableKeyboard", resourceCulture);
-        internal static string TipEnableMouse => ResourceManager.GetString("TipEnableMouse", resourceCulture);
-        internal static string TipToggleWindowHook => ResourceManager.GetString("TipToggleWindowHook", resourceCulture);
-        internal static string TipToggleReuseTabs => ResourceManager.GetString("TipToggleReuseTabs", resourceCulture);
-        internal static string TipToggleStartup => ResourceManager.GetString("TipToggleStartup", resourceCulture);
-        internal static string TipCheckUpdates => ResourceManager.GetString("TipCheckUpdates", resourceCulture);
-        internal static string TipOpenSettings => ResourceManager.GetString("TipOpenSettings", resourceCulture);
-        internal static string TipExitApp => ResourceManager.GetString("TipExitApp", resourceCulture);
+        public static string TipEnableKeyboard => ResourceManager.GetString("TipEnableKeyboard", resourceCulture);
+        public static string TipEnableMouse => ResourceManager.GetString("TipEnableMouse", resourceCulture);
+        public static string TipToggleWindowHook => ResourceManager.GetString("TipToggleWindowHook", resourceCulture);
+        public static string TipToggleReuseTabs => ResourceManager.GetString("TipToggleReuseTabs", resourceCulture);
+        public static string TipToggleStartup => ResourceManager.GetString("TipToggleStartup", resourceCulture);
+        public static string TipCheckUpdates => ResourceManager.GetString("TipCheckUpdates", resourceCulture);
+        public static string TipOpenSettings => ResourceManager.GetString("TipOpenSettings", resourceCulture);
+        public static string TipExitApp => ResourceManager.GetString("TipExitApp", resourceCulture);
 
         // HotKeyProfileControl
-        internal static string ProfileHandled => ResourceManager.GetString("ProfileHandled", resourceCulture);
-        internal static string ProfileTab => ResourceManager.GetString("ProfileTab", resourceCulture);
-        internal static string ProfileDelay => ResourceManager.GetString("ProfileDelay", resourceCulture);
-        internal static string TipEnableProfile => ResourceManager.GetString("TipEnableProfile", resourceCulture);
-        internal static string TipProfileName => ResourceManager.GetString("TipProfileName", resourceCulture);
-        internal static string TipProfileHotkeys => ResourceManager.GetString("TipProfileHotkeys", resourceCulture);
-        internal static string TipProfileScope => ResourceManager.GetString("TipProfileScope", resourceCulture);
-        internal static string TipProfileAction => ResourceManager.GetString("TipProfileAction", resourceCulture);
-        internal static string TipShowMore => ResourceManager.GetString("TipShowMore", resourceCulture);
-        internal static string TipDeleteProfile => ResourceManager.GetString("TipDeleteProfile", resourceCulture);
-        internal static string TipProfilePath => ResourceManager.GetString("TipProfilePath", resourceCulture);
-        internal static string TipProfileDelay => ResourceManager.GetString("TipProfileDelay", resourceCulture);
-        internal static string TipProfileHandled => ResourceManager.GetString("TipProfileHandled", resourceCulture);
-        internal static string TipProfileAsTab => ResourceManager.GetString("TipProfileAsTab", resourceCulture);
+        public static string ProfileHandled => ResourceManager.GetString("ProfileHandled", resourceCulture);
+        public static string ProfileTab => ResourceManager.GetString("ProfileTab", resourceCulture);
+        public static string ProfileDelay => ResourceManager.GetString("ProfileDelay", resourceCulture);
+        public static string TipEnableProfile => ResourceManager.GetString("TipEnableProfile", resourceCulture);
+        public static string TipProfileName => ResourceManager.GetString("TipProfileName", resourceCulture);
+        public static string TipProfileHotkeys => ResourceManager.GetString("TipProfileHotkeys", resourceCulture);
+        public static string TipProfileScope => ResourceManager.GetString("TipProfileScope", resourceCulture);
+        public static string TipProfileAction => ResourceManager.GetString("TipProfileAction", resourceCulture);
+        public static string TipShowMore => ResourceManager.GetString("TipShowMore", resourceCulture);
+        public static string TipDeleteProfile => ResourceManager.GetString("TipDeleteProfile", resourceCulture);
+        public static string TipProfilePath => ResourceManager.GetString("TipProfilePath", resourceCulture);
+        public static string TipProfileDelay => ResourceManager.GetString("TipProfileDelay", resourceCulture);
+        public static string TipProfileHandled => ResourceManager.GetString("TipProfileHandled", resourceCulture);
+        public static string TipProfileAsTab => ResourceManager.GetString("TipProfileAsTab", resourceCulture);
 
         // TabSearchPopup
-        internal static string TipClearHistory => ResourceManager.GetString("TipClearHistory", resourceCulture);
-        internal static string ConfirmClearHistory => ResourceManager.GetString("ConfirmClearHistory", resourceCulture);
-        internal static string ConfirmClearHistoryTitle => ResourceManager.GetString("ConfirmClearHistoryTitle", resourceCulture);
+        public static string TipClearHistory => ResourceManager.GetString("TipClearHistory", resourceCulture);
+        public static string ConfirmClearHistory => ResourceManager.GetString("ConfirmClearHistory", resourceCulture);
+        public static string ConfirmClearHistoryTitle => ResourceManager.GetString("ConfirmClearHistoryTitle", resourceCulture);
 
         // AboutView
-        internal static string AboutSubtitle => ResourceManager.GetString("AboutSubtitle", resourceCulture);
-        internal static string AboutStarGitHub => ResourceManager.GetString("AboutStarGitHub", resourceCulture);
-        internal static string AboutSupportProject => ResourceManager.GetString("AboutSupportProject", resourceCulture);
-        internal static string AboutSupportDesc => ResourceManager.GetString("AboutSupportDesc", resourceCulture);
-        internal static string AboutDeveloper => ResourceManager.GetString("AboutDeveloper", resourceCulture);
-        internal static string AboutCurrentSupporters => ResourceManager.GetString("AboutCurrentSupporters", resourceCulture);
-        internal static string AboutSupportersDesc => ResourceManager.GetString("AboutSupportersDesc", resourceCulture);
-        internal static string AboutBeFirst => ResourceManager.GetString("AboutBeFirst", resourceCulture);
-        internal static string AboutKeepAlive => ResourceManager.GetString("AboutKeepAlive", resourceCulture);
+        public static string AboutSubtitle => ResourceManager.GetString("AboutSubtitle", resourceCulture);
+        public static string AboutStarGitHub => ResourceManager.GetString("AboutStarGitHub", resourceCulture);
+        public static string AboutSupportProject => ResourceManager.GetString("AboutSupportProject", resourceCulture);
+        public static string AboutSupportDesc => ResourceManager.GetString("AboutSupportDesc", resourceCulture);
+        public static string AboutDeveloper => ResourceManager.GetString("AboutDeveloper", resourceCulture);
+        public static string AboutCurrentSupporters => ResourceManager.GetString("AboutCurrentSupporters", resourceCulture);
+        public static string AboutSupportersDesc => ResourceManager.GetString("AboutSupportersDesc", resourceCulture);
+        public static string AboutBeFirst => ResourceManager.GetString("AboutBeFirst", resourceCulture);
+        public static string AboutKeepAlive => ResourceManager.GetString("AboutKeepAlive", resourceCulture);
 
         // CustomMessageBox
-        internal static string BtnOK => ResourceManager.GetString("BtnOK", resourceCulture);
-        internal static string BtnCancel => ResourceManager.GetString("BtnCancel", resourceCulture);
-        internal static string BtnYes => ResourceManager.GetString("BtnYes", resourceCulture);
-        internal static string BtnNo => ResourceManager.GetString("BtnNo", resourceCulture);
+        public static string BtnOK => ResourceManager.GetString("BtnOK", resourceCulture);
+        public static string BtnCancel => ResourceManager.GetString("BtnCancel", resourceCulture);
+        public static string BtnYes => ResourceManager.GetString("BtnYes", resourceCulture);
+        public static string BtnNo => ResourceManager.GetString("BtnNo", resourceCulture);
 
         // Dialog Messages
-        internal static string MsgAnotherInstance => ResourceManager.GetString("MsgAnotherInstance", resourceCulture);
-        internal static string MsgRestoreWindows => ResourceManager.GetString("MsgRestoreWindows", resourceCulture);
-        internal static string MsgToggleVisibility => ResourceManager.GetString("MsgToggleVisibility", resourceCulture);
-        internal static string MsgNoToggleVisibility => ResourceManager.GetString("MsgNoToggleVisibility", resourceCulture);
+        public static string MsgAnotherInstance => ResourceManager.GetString("MsgAnotherInstance", resourceCulture);
+        public static string MsgRestoreWindows => ResourceManager.GetString("MsgRestoreWindows", resourceCulture);
+        public static string MsgToggleVisibility => ResourceManager.GetString("MsgToggleVisibility", resourceCulture);
+        public static string MsgNoToggleVisibility => ResourceManager.GetString("MsgNoToggleVisibility", resourceCulture);
 
         // Constants
-        internal static string NotifyIconText => ResourceManager.GetString("NotifyIconText", resourceCulture);
+        public static string NotifyIconText => ResourceManager.GetString("NotifyIconText", resourceCulture);
 
         // Language Settings
-        internal static string GrpLanguage => ResourceManager.GetString("GrpLanguage", resourceCulture);
-        internal static string LblLanguage => ResourceManager.GetString("LblLanguage", resourceCulture);
-        internal static string TipLanguage => ResourceManager.GetString("TipLanguage", resourceCulture);
-        internal static string TipLanguageRestart => ResourceManager.GetString("TipLanguageRestart", resourceCulture);
+        public static string GrpLanguage => ResourceManager.GetString("GrpLanguage", resourceCulture);
+        public static string LblLanguage => ResourceManager.GetString("LblLanguage", resourceCulture);
+        public static string TipLanguage => ResourceManager.GetString("TipLanguage", resourceCulture);
+        public static string TipLanguageRestart => ResourceManager.GetString("TipLanguageRestart", resourceCulture);
 
         // HotKeyAction Descriptions
-        internal static string Action_Open => ResourceManager.GetString("Action_Open", resourceCulture);
-        internal static string Action_Duplicate => ResourceManager.GetString("Action_Duplicate", resourceCulture);
-        internal static string Action_ReopenClosed => ResourceManager.GetString("Action_ReopenClosed", resourceCulture);
-        internal static string Action_TabSearch => ResourceManager.GetString("Action_TabSearch", resourceCulture);
-        internal static string Action_NavigateBack => ResourceManager.GetString("Action_NavigateBack", resourceCulture);
-        internal static string Action_NavigateUp => ResourceManager.GetString("Action_NavigateUp", resourceCulture);
-        internal static string Action_NavigateForward => ResourceManager.GetString("Action_NavigateForward", resourceCulture);
-        internal static string Action_SetTargetWindow => ResourceManager.GetString("Action_SetTargetWindow", resourceCulture);
-        internal static string Action_ToggleWinHook => ResourceManager.GetString("Action_ToggleWinHook", resourceCulture);
-        internal static string Action_ToggleReuseTabs => ResourceManager.GetString("Action_ToggleReuseTabs", resourceCulture);
-        internal static string Action_ToggleVisibility => ResourceManager.GetString("Action_ToggleVisibility", resourceCulture);
-        internal static string Action_DetachTab => ResourceManager.GetString("Action_DetachTab", resourceCulture);
-        internal static string Action_SnapRight => ResourceManager.GetString("Action_SnapRight", resourceCulture);
-        internal static string Action_SnapLeft => ResourceManager.GetString("Action_SnapLeft", resourceCulture);
-        internal static string Action_SnapUp => ResourceManager.GetString("Action_SnapUp", resourceCulture);
-        internal static string Action_SnapDown => ResourceManager.GetString("Action_SnapDown", resourceCulture);
+        public static string Action_Open => ResourceManager.GetString("Action_Open", resourceCulture);
+        public static string Action_Duplicate => ResourceManager.GetString("Action_Duplicate", resourceCulture);
+        public static string Action_ReopenClosed => ResourceManager.GetString("Action_ReopenClosed", resourceCulture);
+        public static string Action_TabSearch => ResourceManager.GetString("Action_TabSearch", resourceCulture);
+        public static string Action_NavigateBack => ResourceManager.GetString("Action_NavigateBack", resourceCulture);
+        public static string Action_NavigateUp => ResourceManager.GetString("Action_NavigateUp", resourceCulture);
+        public static string Action_NavigateForward => ResourceManager.GetString("Action_NavigateForward", resourceCulture);
+        public static string Action_SetTargetWindow => ResourceManager.GetString("Action_SetTargetWindow", resourceCulture);
+        public static string Action_ToggleWinHook => ResourceManager.GetString("Action_ToggleWinHook", resourceCulture);
+        public static string Action_ToggleReuseTabs => ResourceManager.GetString("Action_ToggleReuseTabs", resourceCulture);
+        public static string Action_ToggleVisibility => ResourceManager.GetString("Action_ToggleVisibility", resourceCulture);
+        public static string Action_DetachTab => ResourceManager.GetString("Action_DetachTab", resourceCulture);
+        public static string Action_SnapRight => ResourceManager.GetString("Action_SnapRight", resourceCulture);
+        public static string Action_SnapLeft => ResourceManager.GetString("Action_SnapLeft", resourceCulture);
+        public static string Action_SnapUp => ResourceManager.GetString("Action_SnapUp", resourceCulture);
+        public static string Action_SnapDown => ResourceManager.GetString("Action_SnapDown", resourceCulture);
     }
 }
