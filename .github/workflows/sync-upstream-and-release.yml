@@ -154,6 +154,7 @@ jobs:
           Copy-Item "LICENSE" "$publishDir/LICENSE"
           Copy-Item "NOTICE.md" "$publishDir/NOTICE.md"
           Copy-Item "tools/Enable-Portable-Startup.cmd" "$publishDir/Enable-Portable-Startup.cmd"
+          Copy-Item "tools/Enable-Portable-Startup.ps1" "$publishDir/Enable-Portable-Startup.ps1"
           Set-Content "$publishDir/portable.mode" "Portable settings are stored beside the executable."
 
       - name: Verify localization payload
@@ -169,6 +170,7 @@ jobs:
             "$publishDir/LICENSE",
             "$publishDir/NOTICE.md",
             "$publishDir/Enable-Portable-Startup.cmd",
+            "$publishDir/Enable-Portable-Startup.ps1",
             "$publishDir/portable.mode"
           )
 
