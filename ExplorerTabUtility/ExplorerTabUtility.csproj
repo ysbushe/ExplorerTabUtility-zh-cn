@@ -7,13 +7,18 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <Version>2.5.0.6</Version>
     <LangVersion>latest</LangVersion>
-    <Title>Explorer Tab Utility</Title>
-    <Authors>w4po</Authors>
-    <Company>$(AssemblyName)</Company>
-    <Description>Explorer Tab Utility: Force new windows to tabs. Streamline navigation!</Description>
-    <Copyright>Copyright © 2025 w4po</Copyright>
-    <PackageProjectUrl>https://github.com/w4po/ExplorerTabUtility</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/w4po/ExplorerTabUtility</RepositoryUrl>
+    <Title>ExplorerTabUtility zh-CN</Title>
+    <AssemblyTitle>ExplorerTabUtility zh-CN</AssemblyTitle>
+    <Product>ExplorerTabUtility zh-CN</Product>
+    <Authors>w4po; ysbushe</Authors>
+    <Company>ysbushe/ExplorerTabUtility-zh-cn</Company>
+    <Description>Windows Explorer tab utility zh-CN community build.</Description>
+    <Copyright>Copyright © 2025 w4po and ExplorerTabUtility zh-CN contributors</Copyright>
+    <FileVersion>2.5.0.6</FileVersion>
+    <InformationalVersion>2.5.0.6-ci-phase1-low-risk-fixes</InformationalVersion>
+    <PackageProjectUrl>https://github.com/ysbushe/ExplorerTabUtility-zh-cn</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ysbushe/ExplorerTabUtility-zh-cn</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>

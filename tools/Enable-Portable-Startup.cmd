@@ -1,6 +1,6 @@
 @echo off
 setlocal
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Enable-Portable-Startup.ps1"
+powershell.exe -NoProfile -File "%~dp0Enable-Portable-Startup.ps1"
 if errorlevel 1 (
   echo Failed to repair portable startup.
   pause
