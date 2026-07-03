@@ -171,6 +171,11 @@ namespace ExplorerTabUtility.Strings {
         public static string TipDoubleClickEmptySpace => ResourceManager.GetString("TipDoubleClickEmptySpace", resourceCulture);
         public static string BuiltInDoubleClickProfileName => ResourceManager.GetString("BuiltInDoubleClickProfileName", resourceCulture);
 
+        // Default Profiles
+        public static string DefaultProfileHomeName => ResourceManager.GetString("DefaultProfileHomeName", resourceCulture);
+        public static string DefaultProfileDuplicateName => ResourceManager.GetString("DefaultProfileDuplicateName", resourceCulture);
+        public static string DefaultProfileReopenClosedName => ResourceManager.GetString("DefaultProfileReopenClosedName", resourceCulture);
+
         // HotKeyAction Descriptions
         public static string Action_Open => ResourceManager.GetString("Action_Open", resourceCulture);
         public static string Action_Duplicate => ResourceManager.GetString("Action_Duplicate", resourceCulture);

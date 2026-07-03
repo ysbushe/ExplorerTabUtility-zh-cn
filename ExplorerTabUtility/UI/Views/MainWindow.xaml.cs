@@ -133,6 +133,11 @@ public partial class MainWindow : Window
 
         if (enabled)
             _hookManager.StartMouseHook();
+        else if (!_profileManager.GetMouseProfiles().Any(p => p.IsEnabled))
+        {
+            SettingsManager.IsMouseHookActive = false;
+            _hookManager.StopMouseHook();
+        }
 
         _notifyIconManager.UpdateMenuItems();
     }
@@ -171,6 +176,7 @@ public partial class MainWindow : Window
         }
         if (SettingsManager.IsKeyboardHookActive) _hookManager.StartKeyboardHook();
         _hookManager.SetReuseTabs(SettingsManager.ReuseTabs);
+        _notifyIconManager.UpdateMenuItems(autoCheckParent: false);
     }
 
     private void ToggleWindowVisibility()

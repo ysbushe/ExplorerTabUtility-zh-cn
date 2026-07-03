@@ -45,10 +45,10 @@ public partial class SystemTrayIcon : UserControl, IDisposable
         ProfileItemCommand = new RelayCommand(OnProfileItemClick, s => s != null && ((MenuItem)s).IsEnabled);
 
         KeyboardHookMenu.CommandParameter = KeyboardHookMenu;
-        KeyboardHookMenu.Command = new RelayCommand(_ => ToggleKeyboardHookMenu(), s => s != null && ((MenuItem)s).HasItems);
+        KeyboardHookMenu.Command = new RelayCommand(_ => ToggleKeyboardHookMenu());
 
         MouseHookMenu.CommandParameter = MouseHookMenu;
-        MouseHookMenu.Command = new RelayCommand(_ => ToggleMouseHookMenu(), s => s != null && ((MenuItem)s).HasItems);
+        MouseHookMenu.Command = new RelayCommand(_ => ToggleMouseHookMenu());
 
         WindowHook.Command = new RelayCommand(_ => ToggleWindowHook());
         ReuseTabs.Command = new RelayCommand(_ => ToggleReuseTabs());
@@ -109,9 +109,14 @@ public partial class SystemTrayIcon : UserControl, IDisposable
 
     public void UpdateMenuItems(bool autoCheckParent = true)
     {
+        KeyboardHookMenu.IsChecked = SettingsManager.IsKeyboardHookActive;
         MouseHookMenu.IsChecked = SettingsManager.IsMouseHookActive;
-        PopulateHookProfiles(KeyboardHookMenu, _profileManager.GetKeyboardProfiles(), autoCheckParent);
-        PopulateHookProfiles(MouseHookMenu, _profileManager.GetMouseProfiles(), autoCheckParent);
+        WindowHook.IsChecked = SettingsManager.IsWindowHookActive;
+        ReuseTabs.IsChecked = SettingsManager.ReuseTabs;
+        AddToStartup.IsChecked = RegistryManager.IsStartupEnabled;
+
+        PopulateHookProfiles(KeyboardHookMenu, _profileManager.GetKeyboardProfiles());
+        PopulateHookProfiles(MouseHookMenu, _profileManager.GetMouseProfiles());
     }
 
     public void SetTrayIconVisibility(bool visible) => TrayIcon.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
@@ -166,7 +171,7 @@ public partial class SystemTrayIcon : UserControl, IDisposable
             dropDownItem.IsEnabled = parent.IsChecked;
 
         // If hook is enabled and no items are checked, tick the first one
-        if (parent.IsChecked && !parent.Items.Cast<MenuItem>().Any(i => i.IsChecked))
+        if (parent.IsChecked && parent.Items.Count > 0 && !parent.Items.Cast<MenuItem>().Any(i => i.IsChecked))
         {
             var first = (MenuItem)parent.Items[0]!;
             first.IsChecked = !first.IsChecked;
@@ -198,7 +203,7 @@ public partial class SystemTrayIcon : UserControl, IDisposable
         AddToStartup.IsChecked = RegistryManager.IsStartupEnabled;
     }
 
-    private void PopulateHookProfiles(MenuItem parent, IEnumerable<HotKeyProfile> profiles, bool autoCheckParent = true)
+    private void PopulateHookProfiles(MenuItem parent, IEnumerable<HotKeyProfile> profiles)
     {
         parent.Items.Clear();
 
@@ -219,13 +224,7 @@ public partial class SystemTrayIcon : UserControl, IDisposable
             parent.Items.Add(profileItem);
         }
 
-        var anyChecked = parent.Items.Cast<MenuItem>().Any(item => item.IsChecked);
-
-        // No subitems are checked, uncheck the parent.
-        // At least one subitem is checked, check the parent (if autoCheckParent)
-        var desiredParentChecked = anyChecked && (parent.IsChecked || autoCheckParent);
-        if (desiredParentChecked != parent.IsChecked)
-            parent.Command.Execute(parent.CommandParameter);
+        CommandManager.InvalidateRequerySuggested();
     }
 
     private void OnProfileItemClick(object? sender)
