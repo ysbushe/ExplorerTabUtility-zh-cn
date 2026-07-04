@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>True</UseWPF>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>2.5.0.6</Version>
     <LangVersion>latest</LangVersion>
     <Title>ExplorerTabUtility zh-CN</Title>

@@ -8,11 +8,11 @@
 #define DashPos Pos("-", MyAppVersionWithoutV)
 #define MyAppNumericVersion (DashPos > 0) ? Copy(MyAppVersionWithoutV, 1, DashPos - 1) : MyAppVersionWithoutV
 
-#define MyAppPublisher "w4po"
+#define MyAppPublisher "ExplorerTabUtility zh-CN contributors"
 #define MyAppName "ExplorerTabUtility"
 #define MyAppExeName MyAppName + ".exe"
 #define MyAppRelativePath MyAppName + "\" + MyAppExeName
-#define MyAppURL "https://github.com/w4po/ExplorerTabUtility"
+#define MyAppURL "https://github.com/ysbushe/ExplorerTabUtility-zh-cn"
 #define DotNet9InstallerUrl "https://download.visualstudio.microsoft.com/download/pr/63f0335a-6012-4017-845f-5d655d56a44f/f8d5150469889387a1de578d45415201/windowsdesktop-runtime-9.0.3-win-x64.exe"
 #define DotNet9InstallerUrlX86 "https://download.visualstudio.microsoft.com/download/pr/48649e20-00b9-43d4-95df-112b80ff7d4e/5652d3ca690f5dc13bbb93ec816c763c/windowsdesktop-runtime-9.0.3-win-x86.exe"
 #define DotNet9InstallerUrlArm64 "https://download.visualstudio.microsoft.com/download/pr/b2f2a05c-c22b-4409-b41e-5f32aaa119a8/71171816b6261ddf0050b3b9172a75ce/windowsdesktop-runtime-9.0.3-win-arm64.exe"
@@ -58,10 +58,53 @@ VersionInfoProductVersion={#MyAppNumericVersion}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+
+[CustomMessages]
+english.StartWithWindows=Start with Windows
+english.WindowsIntegration=Windows integration
+english.ExtractingFiles=Extracting files...
+english.ExtractingApplicationFiles=Extracting application files...
+english.InstallationComplete=Installation complete.
+english.DotNetNoInternet=No internet connection available. The application will use .NET Framework 4.8.1 instead.
+english.DotNetDownloadFailedPrefix=Failed to download .NET 9 Desktop Runtime:
+english.DotNetFallback=The application will use .NET Framework 4.8.1 instead.
+english.DotNetInstallNotDetected=Installation completed but .NET 9 Desktop Runtime is still not detected.
+english.DotNetInstallFailed=Failed to install .NET 9 Desktop Runtime.
+english.DotNetExecFailed=Failed to execute .NET 9 Desktop Runtime installer.
+english.DotNetInstallErrorPrefix=Error during .NET 9 installation:
+english.DotNetDownloadTitle=Downloading .NET 9 Desktop Runtime (%s)
+english.DotNetDownloadDesc=Please wait while the installer downloads the required files...
+english.DotNetInstallTitle=Installing .NET 9 Desktop Runtime...
+english.DotNetInstallDesc=This may take a few minutes...
+english.DotNetRequiredLine1=.NET 9 Desktop Runtime is required but not installed.
+english.DotNetRequiredLine2=Would you like to download and install it now?
+english.DotNetRequiredYes=Yes: Install .NET 9 (Recommended)
+english.DotNetRequiredNo=No: Use .NET Framework 4.8.1 instead
+chinesesimplified.StartWithWindows=随 Windows 启动
+chinesesimplified.WindowsIntegration=Windows 集成
+chinesesimplified.ExtractingFiles=正在解压文件...
+chinesesimplified.ExtractingApplicationFiles=正在解压应用程序文件...
+chinesesimplified.InstallationComplete=安装完成。
+chinesesimplified.DotNetNoInternet=没有可用的网络连接。应用程序将改用 .NET Framework 4.8.1。
+chinesesimplified.DotNetDownloadFailedPrefix=下载 .NET 9 桌面运行时失败：
+chinesesimplified.DotNetFallback=应用程序将改用 .NET Framework 4.8.1。
+chinesesimplified.DotNetInstallNotDetected=安装已完成，但仍未检测到 .NET 9 桌面运行时。
+chinesesimplified.DotNetInstallFailed=.NET 9 桌面运行时安装失败。
+chinesesimplified.DotNetExecFailed=无法启动 .NET 9 桌面运行时安装程序。
+chinesesimplified.DotNetInstallErrorPrefix=.NET 9 安装过程中出现错误：
+chinesesimplified.DotNetDownloadTitle=正在下载 .NET 9 桌面运行时（%s）
+chinesesimplified.DotNetDownloadDesc=请稍候，安装程序正在下载所需文件...
+chinesesimplified.DotNetInstallTitle=正在安装 .NET 9 桌面运行时...
+chinesesimplified.DotNetInstallDesc=这可能需要几分钟...
+chinesesimplified.DotNetRequiredLine1=需要 .NET 9 桌面运行时，但当前尚未安装。
+chinesesimplified.DotNetRequiredLine2=是否现在下载并安装？
+chinesesimplified.DotNetRequiredYes=是：安装 .NET 9（推荐）
+chinesesimplified.DotNetRequiredNo=否：改用 .NET Framework 4.8.1
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "startupicon"; Description: "Start with Windows"; GroupDescription: "Windows Integration"; Flags: unchecked
+Name: "startupicon"; Description: "{cm:StartWithWindows}"; GroupDescription: "{cm:WindowsIntegration}"; Flags: unchecked
 
 [Files]
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
@@ -88,8 +131,6 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppRelativePath}"; Task
 [Registry]
 ; Add to startup if the startup task is selected
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "{#MyAppName}"; ValueData: "{app}\{#MyAppRelativePath}"; Flags: uninsdeletevalue; Tasks: startupicon
-; Set StartupApproved registry entry (enabled = 02 00 00 00 00 00 00 00 00 00 00 00)
-Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run"; ValueType: binary; ValueName: "{#MyAppName}"; ValueData: 02 00 00 00 00 00 00 00 00 00 00 00; Flags: uninsdeletevalue; Tasks: startupicon
 
 [InstallDelete]
 ; Clean the app directory before installation to avoid leftover files
@@ -102,7 +143,7 @@ Type: dirifempty; Name: "{app}"
 
 [Run]
 ; Extract the ZIP file after installation
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -Command ""$ErrorActionPreference = 'Stop'; $zipFile = '{app}\*.zip'; Write-Host 'Extracting application files...'; Expand-Archive -Path $zipFile -DestinationPath '{app}' -Force; Remove-Item -Path $zipFile -Force; Write-Host 'Installation complete.'"""; StatusMsg: "Extracting files..."; Flags: runhidden
+Filename: "powershell.exe"; Parameters: "-NoProfile -Command ""$ErrorActionPreference = 'Stop'; $zipFile = '{app}\*.zip'; Write-Host '{cm:ExtractingApplicationFiles}'; Expand-Archive -Path $zipFile -DestinationPath '{app}' -Force; Remove-Item -Path $zipFile -Force; Write-Host '{cm:InstallationComplete}'"""; StatusMsg: "{cm:ExtractingFiles}"
 
 ; Launch the application after installation if selected
 Filename: "{app}\{#MyAppRelativePath}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -113,15 +154,19 @@ var
   DotNet9Detected: Boolean;
   UseDotNet9: Boolean;
   DownloadPage: TDownloadWizardPage;
+
+function Cm(MessageName: String): String;
+begin
+  Result := ExpandConstant('{cm:' + MessageName + '}');
+end;
   
 // Custom uninstall procedure to remove startup registry entries
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    // Remove startup registry entries regardless of how they were added
+    // Remove the startup registry entry created by this installer.
     RegDeleteValue(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Run', '{#MyAppName}');
-    RegDeleteValue(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run', '{#MyAppName}');
   end;
 end;
   
@@ -255,13 +300,12 @@ begin
   Log('Download error: ' + ErrorMessage + '. Using .NET Framework 4.8.1 instead.');
   
   if Pos('12007', ErrorMessage) > 0 then
-    SuppressibleMsgBox('No internet connection available. The application will use .NET Framework 4.8.1 instead.', 
+    SuppressibleMsgBox(Cm('DotNetNoInternet'),
                        mbInformation, MB_OK, MB_OK)
   else if Pos('aborted', ErrorMessage) > 0 then
     Log('Download was aborted by user. Using .NET Framework 4.8.1 instead.')
   else if not DownloadPage.AbortedByUser then
-    SuppressibleMsgBox('Failed to download .NET 9 Desktop Runtime: ' + ErrorMessage + #13#10 + 
-                       'The application will use .NET Framework 4.8.1 instead.', 
+    SuppressibleMsgBox(Cm('DotNetDownloadFailedPrefix') + ' ' + ErrorMessage + #13#10 + Cm('DotNetFallback'),
                        mbInformation, MB_OK, MB_OK);
 end;
 
@@ -282,8 +326,8 @@ begin
   
   try
     // Set download page text
-    DownloadPage.SetText('Downloading .NET 9 Desktop Runtime (' + ArchString + ')',
-                         'Please wait while the installer downloads the required files...');
+    DownloadPage.SetText(Format(Cm('DotNetDownloadTitle'), [ArchString]),
+                         Cm('DotNetDownloadDesc'));
 
     // Show the download page
     DownloadPage.Show;
@@ -311,7 +355,7 @@ begin
     // If download was successful, run the installer
     if Result then
     begin
-      DownloadPage.SetText('Installing .NET 9 Desktop Runtime...', 'This may take a few minutes...');
+      DownloadPage.SetText(Cm('DotNetInstallTitle'), Cm('DotNetInstallDesc'));
       DownloadPage.SetProgress(0, 100);
       
       try
@@ -329,8 +373,7 @@ begin
             if not IsDotNet9Installed then
             begin
               Log('Installation completed but .NET 9 Desktop Runtime is still not detected');
-              SuppressibleMsgBox('Installation completed but .NET 9 Desktop Runtime is still not detected. ' +
-                                'The application will use .NET Framework 4.8.1 instead.', 
+              SuppressibleMsgBox(Cm('DotNetInstallNotDetected') + ' ' + Cm('DotNetFallback'),
                                 mbInformation, MB_OK, MB_OK);
               Result := False;
             end;
@@ -338,7 +381,7 @@ begin
           else
           begin
             Log(Format('Failed to install .NET 9 Desktop Runtime. Exit code: %d', [ResultCode]));
-            SuppressibleMsgBox('Failed to install .NET 9 Desktop Runtime. The application will use .NET Framework 4.8.1 instead.', 
+            SuppressibleMsgBox(Cm('DotNetInstallFailed') + ' ' + Cm('DotNetFallback'),
                               mbInformation, MB_OK, MB_OK);
             Result := False;
           end;
@@ -346,15 +389,14 @@ begin
         else
         begin
           Log('Failed to execute .NET 9 Desktop Runtime installer');
-          SuppressibleMsgBox('Failed to execute .NET 9 Desktop Runtime installer. The application will use .NET Framework 4.8.1 instead.', 
+          SuppressibleMsgBox(Cm('DotNetExecFailed') + ' ' + Cm('DotNetFallback'),
                             mbInformation, MB_OK, MB_OK);
           Result := False;
         end;
       except
         ErrorMessage := GetExceptionMessage;
         Log('Installation exception: ' + ErrorMessage);
-        SuppressibleMsgBox('Error during .NET 9 installation: ' + ErrorMessage + #13#10 + 
-                          'The application will use .NET Framework 4.8.1 instead.', 
+        SuppressibleMsgBox(Cm('DotNetInstallErrorPrefix') + ' ' + ErrorMessage + #13#10 + Cm('DotNetFallback'),
                           mbInformation, MB_OK, MB_OK);
         Result := False;
       end;
@@ -430,10 +472,10 @@ begin
   // If .NET 9 is not detected and not in silent mode, inform the user that it will be installed
   if not DotNet9Detected and not WizardSilent then
   begin
-    if MsgBox('.NET 9 Desktop Runtime is required but not installed.' + #13#10 + 
-             'Would you like to download and install it now?' + #13#10 + #13#10 +
-             'Yes: Install .NET 9 (Recommended)' + #13#10 +
-             'No: Use .NET Framework 4.8.1 instead',
+    if MsgBox(Cm('DotNetRequiredLine1') + #13#10 +
+             Cm('DotNetRequiredLine2') + #13#10 + #13#10 +
+             Cm('DotNetRequiredYes') + #13#10 +
+             Cm('DotNetRequiredNo'),
              mbConfirmation, MB_YESNO) = IDYES then
     begin
       UseDotNet9 := True;

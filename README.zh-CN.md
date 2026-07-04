@@ -182,6 +182,8 @@
 > - 使用 Visual Studio 自行构建
 > - 验证其安全性和功能
 
+更详细的安全边界、开机启动和自动更新说明见 [SECURITY.zh-CN.md](SECURITY.zh-CN.md)。
+
 ## 许可证
 
 本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
