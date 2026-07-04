@@ -422,7 +422,7 @@ public class ExplorerWatcher : IHook
             {
                 showAgain = false;
 
-                var selectedItems = await GetSelectedItemsWithRetry(window, 500, 50);
+                var selectedItems = await GetSelectedItemsWithRetry(window, 1000, 75);
                 Debug.WriteLine(
                     $"OnShellWindowRegistered selected items before tab merge: {selectedItems?.Length ?? 0}");
 
@@ -605,7 +605,7 @@ public class ExplorerWatcher : IHook
                 {
                     windowHandle = WinApi.GetParent(existingTab);
                     await SelectTabByHandle(windowHandle, existingTab);
-                    await RestoreSelectionOnExistingTab(existingTab, windowToOpen.SelectedItems);
+                    await RestoreSelectionOnExistingTabWithRetry(existingTab, windowToOpen.SelectedItems);
                     WinApi.RestoreWindowToForeground(windowHandle);
                     return;
                 }
@@ -772,7 +772,7 @@ public class ExplorerWatcher : IHook
             await Task.Delay(intervalMs);
         }
     }
-    private async Task RestoreSelectionOnExistingTab(nint existingTab, string[]? selectedItems)
+    private async Task RestoreSelectionOnExistingTabWithRetry(nint existingTab, string[]? selectedItems)
     {
         if (selectedItems == null || selectedItems.Length == 0)
         {
@@ -782,26 +782,41 @@ public class ExplorerWatcher : IHook
 
         Debug.WriteLine($"Trying to restore selection on reused tab. Items: {selectedItems.Length}");
 
-        try
-        {
-            await Task.Delay(100);
-            var existingWindow = await Helper.DoUntilNotDefaultAsync(
-                () => GetWindowByTabHandle(existingTab),
-                700,
-                50);
+        var timeoutAt = Environment.TickCount + 1200;
+        var attempt = 0;
 
-            if (existingWindow == null)
+        while (true)
+        {
+            attempt++;
+            try
             {
-                Debug.WriteLine("Could not restore selection on reused tab: window not found.");
+                var existingWindow = GetWindowByTabHandle(existingTab);
+                if (existingWindow == null)
+                {
+                    Debug.WriteLine($"Selection restore attempt {attempt}: reused tab window not found.");
+                }
+                else if (SelectItems(existingWindow, selectedItems))
+                {
+                    Debug.WriteLine($"Selection restored on reused tab. Attempt: {attempt}");
+                    return;
+                }
+                else
+                {
+                    Debug.WriteLine($"Selection restore attempt {attempt}: SelectItems did not select an item.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Selection restore attempt {attempt} failed: {ex.Message}");
+            }
+
+            if (Environment.TickCount >= timeoutAt)
+            {
+                Debug.WriteLine($"Could not restore selection on reused tab after {attempt} attempts.");
                 return;
             }
 
-            SelectItems(existingWindow, selectedItems);
-            Debug.WriteLine("Selection restored on reused tab.");
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Could not restore selection on reused tab: {ex.Message}");
+            await Task.Delay(100);
         }
     }
     private static string[]? GetSelectedItems(InternetExplorer window)
@@ -813,24 +828,96 @@ public class ExplorerWatcher : IHook
         var result = new string[count];
         for (var i = 0; i < count; i++)
         {
-            result[i] = selectedItems.Item(i).Name;
+            var selectedItem = selectedItems.Item(i);
+            string? path = null;
+            try
+            {
+                path = selectedItem.Path;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"GetSelectedItems could not read Path: {ex.Message}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                result[i] = path;
+                Debug.WriteLine($"GetSelectedItems captured Path: {path}");
+            }
+            else
+            {
+                var name = selectedItem.Name;
+                result[i] = name;
+                Debug.WriteLine($"GetSelectedItems captured Name: {name}");
+            }
         }
 
+        Debug.WriteLine($"GetSelectedItems count: {count}");
         return result;
     }
-    private static void SelectItems(InternetExplorer window, string[]? names)
+    private static bool SelectItems(InternetExplorer window, string[]? names)
     {
-        if (names == null || names.Length == 0) return;
+        if (names == null || names.Length == 0) return false;
 
-        if (window.Document is not ShellFolderView document) return;
+        if (window.Document is not ShellFolderView document) return false;
 
+        var selectedAny = false;
         for (var i = 0; i < names.Length; i++)
         {
             var name = names[i];
-            object item = document.Folder.ParseName(name);
-            if (item == null) continue;
-            document.SelectItem(ref item, 1);
+            foreach (var (candidate, source) in GetSelectionCandidates(name))
+            {
+                try
+                {
+                    object item = document.Folder.ParseName(candidate);
+                    if (item == null)
+                    {
+                        Debug.WriteLine($"SelectItems ParseName failed. Source: {source}; Item: {name}");
+                        continue;
+                    }
+
+                    document.SelectItem(ref item, 1);
+                    Debug.WriteLine($"SelectItems selected item by {source}: {candidate}");
+                    selectedAny = true;
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"SelectItems failed. Source: {source}; Item: {name}; Error: {ex.Message}");
+                }
+            }
         }
+
+        return selectedAny;
+    }
+    private static IEnumerable<(string Candidate, string Source)> GetSelectionCandidates(string selectedItem)
+    {
+        if (string.IsNullOrWhiteSpace(selectedItem))
+            yield break;
+
+        var isPathRooted = false;
+        string? fileName = null;
+        try
+        {
+            isPathRooted = System.IO.Path.IsPathRooted(selectedItem);
+            if (isPathRooted)
+                fileName = System.IO.Path.GetFileName(selectedItem);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"SelectItems could not parse selected item path: {selectedItem}; Error: {ex.Message}");
+        }
+
+        if (isPathRooted)
+        {
+            if (!string.IsNullOrWhiteSpace(fileName))
+                yield return (fileName, "file name from full path");
+
+            yield return (selectedItem, "full path");
+            yield break;
+        }
+
+        yield return (selectedItem, "name");
     }
     private static string GetLocation(InternetExplorer window)
     {
