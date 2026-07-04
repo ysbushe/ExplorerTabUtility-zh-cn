@@ -422,7 +422,8 @@ public class ExplorerWatcher : IHook
             {
                 showAgain = false;
 
-                var selectedItems = await GetSelectedItemsWithRetry(window, 1000, 75);
+                // Keep this short: normal folder opens have no selection and should not wait too long.
+                var selectedItems = await GetSelectedItemsWithRetry(window, 500, 50);
                 Debug.WriteLine(
                     $"OnShellWindowRegistered selected items before tab merge: {selectedItems?.Length ?? 0}");
 
