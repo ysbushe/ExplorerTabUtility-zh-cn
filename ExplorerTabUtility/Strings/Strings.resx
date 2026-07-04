@@ -341,6 +341,17 @@ Check in System Tray Icons.</value>
     <value>Double-click empty space to navigate up</value>
   </data>
 
+  <!-- Default Profiles -->
+  <data name="DefaultProfileHomeName" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="DefaultProfileDuplicateName" xml:space="preserve">
+    <value>Duplicate Tab</value>
+  </data>
+  <data name="DefaultProfileReopenClosedName" xml:space="preserve">
+    <value>Reopen Closed Location</value>
+  </data>
+
   <!-- Scope -->
   <data name="Scope_Global" xml:space="preserve">
     <value>Global</value>

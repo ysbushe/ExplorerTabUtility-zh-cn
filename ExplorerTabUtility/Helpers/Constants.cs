@@ -1,4 +1,7 @@
+using System.Text.Json;
+using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Strings;
+using H.Hooks;
 
 namespace ExplorerTabUtility.Helpers;
 
@@ -12,5 +15,36 @@ internal static class Constants
     internal const string PortableModeFileName = "portable.mode";
     internal const string JsonFileFilter = "JSON files (*.json)|*.json|All Files|*.*";
     internal const string UpdateUrl = "https://api.github.com/repos/ysbushe/ExplorerTabUtility-zh-cn/releases/latest";
-    internal const string DefaultHotKeyProfiles = "[{\"Name\":\"Home\",\"HotKeys\":[91,69],\"Scope\":0,\"Action\":0,\"Path\":\"\",\"IsHandled\":true,\"IsEnabled\":true,\"Delay\":0},{\"Name\":\"Duplicate\",\"HotKeys\":[17,68],\"Scope\":1,\"Action\":1,\"Path\":null,\"IsHandled\":true,\"IsEnabled\":true,\"Delay\":0},{\"Name\":\"ReopenClosed\",\"HotKeys\":[16,17,84],\"Scope\":1,\"Action\":2,\"Path\":null,\"IsHandled\":true,\"IsEnabled\":true,\"Delay\":0}]";
+    internal static string DefaultHotKeyProfiles => JsonSerializer.Serialize(new[]
+    {
+        new HotKeyProfile
+        {
+            Name = Res.DefaultProfileHomeName ?? "Home",
+            HotKeys = new[] { Key.LWin, Key.E },
+            Scope = HotkeyScope.Global,
+            Action = HotKeyAction.Open,
+            Path = string.Empty,
+            IsHandled = true,
+            IsEnabled = true
+        },
+        new HotKeyProfile
+        {
+            Name = Res.DefaultProfileDuplicateName ?? "Duplicate",
+            HotKeys = new[] { Key.Ctrl, Key.D },
+            Scope = HotkeyScope.FileExplorer,
+            Action = HotKeyAction.Duplicate,
+            IsHandled = true,
+            IsEnabled = true
+        },
+        new HotKeyProfile
+        {
+            Name = Res.DefaultProfileReopenClosedName ?? "Reopen Closed",
+            HotKeys = new[] { Key.Shift, Key.Ctrl, Key.T },
+            Scope = HotkeyScope.FileExplorer,
+            Action = HotKeyAction.ReopenClosed,
+            IsHandled = true,
+            IsEnabled = true
+        }
+    });
+
 }

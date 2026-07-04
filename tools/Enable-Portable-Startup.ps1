@@ -7,47 +7,16 @@ if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) {
 }
 
 $exe = [IO.Path]::GetFullPath($exe)
-$workDirectory = Split-Path -Parent $exe
-$taskName = 'ExplorerTabUtility'
-$user = "$env:USERDOMAIN\$env:USERNAME"
+$runKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
+$valueName = 'ExplorerTabUtility'
+$valueData = "`"$exe`""
 
-$action = New-ScheduledTaskAction -Execute $exe -WorkingDirectory $workDirectory
-$trigger = New-ScheduledTaskTrigger -AtLogOn -User $user
-$settings = New-ScheduledTaskSettingsSet `
-    -AllowStartIfOnBatteries `
-    -DontStopIfGoingOnBatteries `
-    -ExecutionTimeLimit (New-TimeSpan -Hours 0)
-$principal = New-ScheduledTaskPrincipal `
-    -UserId $user `
-    -LogonType Interactive `
-    -RunLevel Limited
+Write-Host 'ExplorerTabUtility portable startup helper'
+Write-Host 'This optional tool only writes the current-user HKCU Run entry.'
+Write-Host 'It does not create VBS files, scheduled tasks, or Startup folder shortcuts.'
+Write-Host "Startup target: $exe"
 
-Register-ScheduledTask `
-    -TaskName $taskName `
-    -Action $action `
-    -Trigger $trigger `
-    -Settings $settings `
-    -Principal $principal `
-    -Description 'Start ExplorerTabUtility zh-CN portable edition at user logon.' `
-    -Force | Out-Null
+New-Item -Path $runKey -Force | Out-Null
+Set-ItemProperty -Path $runKey -Name $valueName -Value $valueData
 
-$startup = [Environment]::GetFolderPath('Startup')
-$linkPath = Join-Path $startup 'ExplorerTabUtility.lnk'
-$shell = New-Object -ComObject WScript.Shell
-$shortcut = $shell.CreateShortcut($linkPath)
-try {
-    $shortcut.TargetPath = $exe
-    $shortcut.WorkingDirectory = $workDirectory
-    $shortcut.Description = 'ExplorerTabUtility portable startup fallback'
-    $shortcut.Save()
-}
-finally {
-    if ($shortcut -ne $null) {
-        [Runtime.InteropServices.Marshal]::FinalReleaseComObject($shortcut) | Out-Null
-    }
-    if ($shell -ne $null) {
-        [Runtime.InteropServices.Marshal]::FinalReleaseComObject($shell) | Out-Null
-    }
-}
-
-Start-ScheduledTask -TaskName $taskName
+Write-Host 'Startup entry updated.'

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/zh-cn-localization
+      - ci/**
   workflow_dispatch:
 
 env:
@@ -16,8 +17,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: feature/zh-cn-localization
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
@@ -74,7 +73,7 @@ jobs:
           # ExplorerTabUtility zh-CN 构建报告
 
           > 构建时间：$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          > 分支：feature/zh-cn-localization
+          > 分支：${{ github.ref_name }}
           > 工作流：build.yml
 
           ## 构建状态
